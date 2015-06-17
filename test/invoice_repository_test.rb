@@ -1,74 +1,92 @@
 require 'minitest/autorun'
-require './lib/merchant_repository'
+require './lib/invoice_repository'
 require './lib/sales_engine'
 
-class MerchantRepositoryTest < Minitest::Test
+class InvoiceRepositoryTest < Minitest::Test
 
   def test_class
-    assert MerchantRepository
+    assert InvoiceRepository
   end
 
-  def test_find_all_merchants
+  def test_find_all_invoices
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
-    repo = se.merchant_repository
-    assert_equal 5, repo.all.count
+    repo = se.invoice_repository
+    assert_equal 10, repo.all.count
 
   end
 
-  def test_find_random_merchants
+  def test_find_random_invoices
+    skip
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
-    repo = se.merchant_repository
-    merchant_permutations = repo.all.permutation.to_a
-      assert merchant_permutations.include?(repo.random)
+    repo = se.invoice_repository
+    invoice_permutations = repo.all.permutation.to_a
+    assert invoice_permutations.include?(repo.random)
 
   end
 
-  def test_find_merchant_by_id
+  def test_find_invoice_by_id
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
-    repo = se.merchant_repository
+    repo = se.invoice_repository
 
-    ids = repo.find_by_id("2")
+    ids = repo.find_by_id("1")
     ids.each do |id|
-      assert_equal 2, id.id
+      assert_equal 1, id.id
     end
   end
-  def test_find_merchant_by_name
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
 
-    names = repo.find_by_name("Schroeder-Jerde")
-    names.each do |name|
-      assert_equal "Schroeder-Jerde", repo.find_by_name("Schroeder-Jerde")
-    end
-  end
-  def test_find_merchant_by_created_at
+  def test_find_invoice_by_customer_id
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
-    repo = se.merchant_repository
+    repo = se.invoice_repository
+
+    customer_ids = repo.find_by_customer_id("2")
+    customer_ids.each do |customer_id|
+      assert_equal "0", customer_id.customer_id("2")
+    end
+  end
+
+  def test_find_invoice_by_merchant_id
+    skip
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.invoice_repository
+
+    merchant_ids = repo.find_by_merchant_id("2")
+    merchant_ids.each do |merchant_id|
+      assert_equal "Schroeder-Jerde", repo.find_by_merchant_id("Schroeder-Jerde")
+    end
+  end
+
+  def test_find_merchant_by_created_at
+    skip
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.invoice_repository
 
     created_at = repo.find_by_created_at("2012-03-27 14:53:59 UTC")
     created_at.each do |create|
       assert_equal "2012-03-27 14:53:59 UTC", create.created_at
     end
-      created_at = repo.find_by_created_at("2012-03-2 14:53:59 UTC")
-      created_at.each do |create|
-        assert_equal "", create.created_at
+    created_at = repo.find_by_created_at("2012-03-2 14:53:59 UTC")
+    created_at.each do |create|
+      assert_equal "", create.created_at
     end
   end
   def test_find_merchant_by_updated_at
+    skip
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
-    repo = se.merchant_repository
+    repo = se.invoice_repository
 
     updated_at = repo.find_by_updated_at("2012-03-27 14:53:59 UTC")
     updated_at.each do |update|
@@ -82,6 +100,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_id
+    skip
     repo       = MerchantRepository.new(
       [{id: 1, name: "Sylvester"},
         {id: 1, name: "Mary"},
@@ -106,6 +125,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_name
+    skip
     repo       = MerchantRepository.new(
       [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
@@ -130,6 +150,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_created_at
+    skip
     repo       = MerchantRepository.new(
       [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
@@ -154,6 +175,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_updated_at
+    skip
     repo       = MerchantRepository.new(
       [{id: 1, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
@@ -176,6 +198,5 @@ class MerchantRepositoryTest < Minitest::Test
       assert_equal [], updated_ats.map { |updated_at| updated_at.updated_at }
     end
   end
-
 
 end
