@@ -3,7 +3,7 @@ require './lib/merchant'
 
 class MerchantTest < Minitest::Test
   def test_class
-    assert Merchant.new
+    assert Merchant
   end
 
 end
