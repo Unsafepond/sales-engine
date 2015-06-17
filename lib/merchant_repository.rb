@@ -38,6 +38,18 @@ class MerchantRepository
     @all.select { |merchant| merchant.updated_at == update_date }
   end
 
+  def find_all_by_id(id)
+    @all.select { |merchant| merchant.id == id }
+  end
+
+  def find_all_by_created_at(created_at)
+    @all.select { |merchant| merchant.created_at == created_at }
+  end
+
+  def find_all_by_updated_at(updated_at)
+    @all.select { |merchant| merchant.updated_at == updated_at }
+  end
+
 
 
 
