@@ -53,7 +53,6 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_find_invoice_by_merchant_id
-    skip
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
