@@ -1,6 +1,6 @@
 # Sales Engine
 
-(insert project completion goals for first check-in here)
+Open and read all data types and parse to individual items
 
 (insert project completion goals for second check-in here)
 
