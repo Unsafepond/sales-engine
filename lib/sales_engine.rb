@@ -18,9 +18,11 @@ class SalesEngine
   def startup
     hashes = CSV.read "#{@data_dir}/merchants.csv", headers: true, header_converters: :symbol
     hashes2 = CSV.read "#{@data_dir}/invoices.csv", headers: true, header_converters: :symbol
+    hashes4 = CSV.read "#{@data_dir}/invoice_items.csv", headers: true, header_converters: :symbol
     @merchant_repository      = MerchantRepository.new(hashes)
     @invoice_repository      = InvoiceRepository.new(hashes2)
 
+    @invoice_item_repository = InvoiceItemRepository.new(hashes4)
 
   end
 end
