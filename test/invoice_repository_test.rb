@@ -1,6 +1,6 @@
 require 'minitest/autorun'
-require '../lib/invoice_repository'
-require '../lib/sales_engine'
+require './lib/invoice_repository'
+require './lib/sales_engine'
 require 'pry'
 
 class InvoiceRepositoryTest < Minitest::Test
