@@ -23,19 +23,19 @@ class MerchantRepository
   end
 
   def find_by_id(id)
-    @all.select { |merchant| merchant.id == id }
+    @all.select { |merchant| merchant.id == id }.first
   end
 
   def find_by_name(name)
-    @all.select { |merchant| merchant.name == name }
+    @all.select { |merchant| merchant.name == name }.first
   end
 
   def find_by_created_at(create_date)
-    @all.select { |merchant| merchant.created_at == create_date }
+    @all.select { |merchant| merchant.created_at == create_date }.first
   end
 
   def find_by_updated_at(update_date)
-    @all.select { |merchant| merchant.updated_at == update_date }
+    @all.select { |merchant| merchant.updated_at == update_date }.first
   end
 
   def find_all_by_id(id)
