@@ -1,6 +1,6 @@
 require 'minitest/autorun'
-require './lib/merchant_repository'
-require './lib/sales_engine'
+require '../lib/merchant_repository'
+require '../lib/sales_engine'
 require 'pry'
 
 class MerchantRepositoryTest < Minitest::Test

@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require './lib/sales_engine'
+require '../lib/sales_engine'
 
 class SalesEngineTest < Minitest::Test
   def test_class
