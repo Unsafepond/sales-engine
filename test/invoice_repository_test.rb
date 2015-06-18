@@ -115,33 +115,69 @@ class InvoiceRepositoryTest < Minitest::Test
     end
   end
 
-  def test_find_all_by_name
-    skip
+  def test_find_all_by_customer_id
     repo       = InvoiceRepository.new(
-      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, customer_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, customer_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, customer_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
       ]
     )
 
-    names = repo.find_all_by_name("Mike")
-    names.each do |name|
-      assert_equal 2, names.map { |name| name.name }.count
+    customer_ids = repo.find_all_by_customer_id(2)
+    customer_ids.each do |customer_id|
+      assert_equal 2, customer_ids.map { |customer_id| customer_id.customer_id }.count
     end
 
-    names = repo.find_all_by_name("Jerrod")
-    names.each do |name|
-      assert_equal ["Jerrod"], names.map { |name| name.name }
+    customer_ids = repo.find_all_by_customer_id(1)
+    customer_ids.each do |customer_id|
+      assert_equal [1], customer_ids.map { |customer_id| customer_id.customer_id }
     end
 
-    names = repo.find_all_by_name("Tim")
-    names.each do |name|
-      assert_equal [], names.map { |name| name.name }
+    customer_ids = repo.find_all_by_customer_id(3)
+    customer_ids.each do |customer_id|
+      assert_equal [], customer_ids.map { |customer_id| customer_id.customer_id }
+    end
+  end
+  def test_find_all_by_merchant_id
+    repo       = InvoiceRepository.new(
+      [{id: 1, merchant_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, merchant_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, merchant_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
+      ]
+    )
+
+    merchant_ids = repo.find_all_by_merchant_id(2)
+    merchant_ids.each do |merchant_id|
+      assert_equal 2, merchant_ids.map { |merchant_id| merchant_id.merchant_id }.count
+    end
+
+    merchant_ids = repo.find_all_by_merchant_id(1)
+    merchant_ids.each do |merchant_id|
+      assert_equal [1], merchant_ids.map { |merchant_id| merchant_id.merchant_id }
+    end
+
+    merchant_ids = repo.find_all_by_merchant_id(3)
+    merchant_ids.each do |merchant_id|
+      assert_equal [], merchant_ids.map { |merchant_id| merchant_id.merchant_id }
     end
   end
 
+  def test_find_all_by_status
+    repo       = InvoiceRepository.new(
+      [{id: 1, status: "shipped", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, status: "shipped", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, status: "shipped", created_at: "2012-03-27 14:53:59 UTC"}
+      ]
+    )
+
+    statuss = repo.find_all_by_status("shipped")
+    statuss.each do |status|
+      assert_equal 3, statuss.map { |status| status.status }.count
+    end
+
+  end
+
   def test_find_all_by_created_at
-    skip
     repo       = InvoiceRepository.new(
       [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
@@ -166,7 +202,6 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_updated_at
-    skip
     repo       = InvoiceRepository.new(
       [{id: 1, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},

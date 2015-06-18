@@ -39,4 +39,29 @@ class InvoiceRepository
     @all.select { |invoice| invoice.id == id }
   end
 
+  def find_all_by_customer_id(customer_id)
+    @all.select { |invoice| invoice.customer_id == customer_id }
+
+  end
+
+  def find_all_by_merchant_id(merchant_id)
+    @all.select { |invoice| invoice.merchant_id == merchant_id }
+
+  end
+
+  def find_all_by_status(status)
+    @all.select { |invoice| invoice.status == status }
+
+  end
+
+  def find_all_by_created_at(created_at)
+    @all.select { |invoice| invoice.created_at == created_at }
+
+  end
+  def find_all_by_updated_at(updated_at)
+    @all.select { |invoice| invoice.updated_at == updated_at }
+
+  end
+
+
 end
