@@ -1,6 +1,6 @@
 require 'minitest/autorun'
-require '../lib/item_repository'
-require '../lib/sales_engine'
+require './lib/item_repository'
+require './lib/sales_engine'
 require 'pry'
 # id,name,description,unit_price,merchant_id,
 # created_at,updated_at

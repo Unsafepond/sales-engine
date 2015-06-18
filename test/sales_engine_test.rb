@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require '../lib/sales_engine'
+require './lib/sales_engine'
 
 class SalesEngineTest < Minitest::Test
   def test_class
@@ -30,7 +30,7 @@ class SalesEngineTest < Minitest::Test
       assert_equal 1, invoice_item.id
     end
   end
-  
+
 
   def test_startup_creates_mechant_repo
     data_directory = File.expand_path 'fixtures', __dir__
