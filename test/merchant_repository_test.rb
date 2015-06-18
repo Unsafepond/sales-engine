@@ -10,58 +10,68 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_find_all_merchants
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
-    assert_equal 5, repo.all.count
+    data = [{id: 1, name: "Sylvester"},
+      {id: 1, name: "Mary"},
+      {id: 3, name: "Sylvester"}
+    ]
+
+    repo = MerchantRepository.new(data, 'sales engine self instance')
+
+    assert_equal 3, repo.all.count
 
   end
 
   def test_find_random_merchants
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
-    merchant_permutations = repo.all.permutation.to_a
-      assert merchant_permutations.include?(repo.random)
+    repo       = MerchantRepository.new(
+      [{id: 1, name: "Sylvester"}
+      ], 'sales engine self instance'
+    )
+      assert_equal 1, repo.random.id
 
   end
 
   def test_find_merchant_by_id
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
+    repo       = MerchantRepository.new(
+      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
 
     ids = repo.find_by_id(2)
     assert_equal 2, ids.id
 
   end
   def test_find_merchant_by_name
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
-    names = repo.find_by_name("Willms and Sons")
-      assert_equal "Willms and Sons", names.name
+    repo       = MerchantRepository.new(
+      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
+    names = repo.find_by_name("Jerrod")
+      assert_equal "Jerrod", names.name
     # end
   end
   def test_find_merchant_by_created_at
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
+    repo       = MerchantRepository.new(
+      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
 
     created_at = repo.find_by_created_at("2012-03-27 14:53:59 UTC")
     assert_equal "2012-03-27 14:53:59 UTC", created_at.created_at
 
   end
   def test_find_merchant_by_updated_at
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
+    repo       = MerchantRepository.new(
+      [{id: 1, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
 
     updated_at = repo.find_by_updated_at("2012-03-27 14:53:59 UTC")
     assert_equal "2012-03-27 14:53:59 UTC", updated_at.updated_at
@@ -73,7 +83,7 @@ class MerchantRepositoryTest < Minitest::Test
       [{id: 1, name: "Sylvester"},
         {id: 1, name: "Mary"},
         {id: 3, name: "Sylvester"}
-      ]
+      ], 'sales engine self instance'
     )
 
     ids = repo.find_all_by_id("1")
@@ -97,7 +107,7 @@ class MerchantRepositoryTest < Minitest::Test
       [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
         {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], "fake sales egine"
     )
 
     names = repo.find_all_by_name("Mike")
@@ -121,7 +131,7 @@ class MerchantRepositoryTest < Minitest::Test
       [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
         {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], "fake sales egine"
     )
 
     created_ats = repo.find_all_by_created_at("2012-03-27 14:53:59 UTC")
@@ -145,7 +155,7 @@ class MerchantRepositoryTest < Minitest::Test
       [{id: 1, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
         {id: 3, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], "fake sales egine"
     )
 
     updated_ats = repo.find_all_by_updated_at("2012-03-27 14:53:59 UTC")
