@@ -14,10 +14,8 @@ class SalesEngine
 
   attr_accessor :merchant_repository,
                 :invoice_repository,
-                :item_repository,
-                :invoice_repository,
-                :customer_repository,
-                :transactions
+                :invoice_item_repository
+
 
   def startup
     hashes = CSV.read "#{@data_dir}/merchants.csv", headers: true, header_converters: :symbol
