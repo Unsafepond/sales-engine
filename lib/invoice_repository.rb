@@ -1,38 +1,44 @@
-require_relative "sales_engine"
+require_relative 'sales_engine'
 require_relative 'invoice'
 
 class InvoiceRepository
   attr_reader :all
 
-  def initialize(hashes)
+  def initialize(hashes, sales_engine)
     @all = hashes.map { |hash| Invoice.new(hash.to_hash, self)}
+    @sales_engine = sales_engine
   end
 
   def random
     @all.shuffle
   end
   def find_by_id(id)
-    @all.select { |invoice| invoice.id == id }
+    @all.find { |invoice| invoice.id == id }
   end
 
   def find_by_customer_id(customer_id)
-    @all.select { |invoice| invoice.customer_id == customer_id}.first
+    @all.find { |invoice| invoice.customer_id == customer_id}
   end
 
   def find_by_merchant_id(merchant_id)
-    @all.select { |invoice| invoice.merchant_id == merchant_id}.first
+    @all.find { |invoice| invoice.merchant_id == merchant_id}
+  end
+
+  def find_merchant_by_invoice_id(invoice_id)
+    invoice = find_by_id(invoice_id)
+    @sales_engine.merchant_repository.find_by_id(invoice.merchant_id)
   end
 
   def find_by_status(status)
-    @all.select { |invoice| invoice.status == status}.first
+    @all.find { |invoice| invoice.status == status}
   end
 
   def find_by_created_at(created_at)
-    @all.select { |invoice| invoice.created_at == created_at}.first
+    @all.find { |invoice| invoice.created_at == created_at}
   end
 
   def find_by_updated_at(updated_at)
-    @all.select { |invoice| invoice.updated_at == updated_at}.first
+    @all.find { |invoice| invoice.updated_at == updated_at}
   end
 
   def find_all_by_id(id)

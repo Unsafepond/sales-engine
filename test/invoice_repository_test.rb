@@ -10,52 +10,60 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_find_all_invoices
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.invoice_repository
-    assert_equal 10, repo.all.count
+    repo = InvoiceRepository.new(
+      [{id: 1},
+        {id: 1},
+        {id: 3}
+      ], "fake sales engine"
+    )
+
+    assert_equal 3, repo.all.count
 
   end
 
   def test_find_random_invoices
-    skip
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.invoice_repository
+    repo       = InvoiceRepository.new(
+      [{id: 1, customer_id: "Sylvester"},
+        {id: 1, customer_id: "Mary"},
+        {id: 3, customer_id: "Sylvester"}
+      ], "fake sales engine"
+    )
     invoice_permutations = repo.all.permutation.to_a
     assert invoice_permutations.include?(repo.random)
 
   end
 
   def test_find_invoice_by_id
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.invoice_repository
+    repo       = InvoiceRepository.new(
+      [{id: 1, customer_id: "Sylvester"},
+        {id: 1, customer_id: "Mary"},
+        {id: 3, customer_id: "Sylvester"}
+      ], "fake sales engine"
+    )
+    ids = repo.find_by_id(1)
 
-    ids = repo.find_by_id("1")
-    ids.each do |id|
-      assert_equal 1, id.id
-    end
+      assert_equal 1, ids.id
   end
 
   def test_find_invoice_by_customer_id
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.invoice_repository
+    repo       = InvoiceRepository.new(
+      [{id: 1, customer_id: 10},
+        {id: 1, customer_id: 20},
+        {id: 3, customer_id: 30}
+      ], "fake sales engine"
+    )
 
-    customer_ids = repo.find_by_customer_id(2)
-    assert_equal 2, customer_ids.customer_id
+    customer_ids = repo.find_by_customer_id(20)
+    assert_equal 20, customer_ids.customer_id
   end
 
   def test_find_invoice_by_status
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.invoice_repository
+    repo       = InvoiceRepository.new(
+      [{id: 1, status: "shipped", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, status: "shipped", created_at: "1996-08-27 14:53:59 UTC", merchant_id: 5},
+        {id: 3, status: "shipped", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales_engine"
+    )
 
     status = repo.find_by_status("shipped")
     assert_equal "shipped", status.status
@@ -93,10 +101,10 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_find_all_by_id
     repo       = InvoiceRepository.new(
-      [{id: 1, name: "Sylvester"},
-        {id: 1, name: "Mary"},
-        {id: 3, name: "Sylvester"}
-      ]
+      [{id: 1, customer_id: "Sylvester"},
+        {id: 1, customer_id: "Mary"},
+        {id: 3, customer_id: "Sylvester"}
+      ], "fake sales egine"
     )
 
     ids = repo.find_all_by_id("1")
@@ -120,7 +128,7 @@ class InvoiceRepositoryTest < Minitest::Test
       [{id: 1, customer_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, customer_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
         {id: 3, customer_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], "fake sales egine"
     )
 
     customer_ids = repo.find_all_by_customer_id(2)
@@ -143,7 +151,7 @@ class InvoiceRepositoryTest < Minitest::Test
       [{id: 1, merchant_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, merchant_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
         {id: 3, merchant_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], "fake sales egine"
     )
 
     merchant_ids = repo.find_all_by_merchant_id(2)
@@ -163,18 +171,18 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_status
+    merchant_repo = MerchantRepository.new([{id: 5, name: "Mike's store"}], Struct.new(:id).new(1))
+    sales_engine = Struct.new(:merchant_repository).new(merchant_repo)
     repo       = InvoiceRepository.new(
       [{id: 1, status: "shipped", created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, status: "shipped", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 2, status: "shipped", created_at: "1996-08-27 14:53:59 UTC", merchant_id: 5},
         {id: 3, status: "shipped", created_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], sales_engine
     )
 
-    statuss = repo.find_all_by_status("shipped")
-    statuss.each do |status|
-      assert_equal 3, statuss.map { |status| status.status }.count
-    end
-
+    merchant = repo.find_merchant_by_invoice_id(2)
+    assert_equal 5, merchant.id
+    assert_equal "Mike's store", merchant.name
   end
 
   def test_find_all_by_created_at
@@ -182,7 +190,7 @@ class InvoiceRepositoryTest < Minitest::Test
       [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
         {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], "fake sales egine"
     )
 
     created_ats = repo.find_all_by_created_at("2012-03-27 14:53:59 UTC")
@@ -206,7 +214,7 @@ class InvoiceRepositoryTest < Minitest::Test
       [{id: 1, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
         {id: 3, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"}
-      ]
+      ], "fake sales egine"
     )
 
     updated_ats = repo.find_all_by_updated_at("2012-03-27 14:53:59 UTC")

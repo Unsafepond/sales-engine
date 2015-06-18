@@ -6,7 +6,7 @@ class SalesEngineTest < Minitest::Test
     assert SalesEngine
   end
 
-  def test_startup_reads_csv
+  def test_startup_creates_mechant_repo
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
@@ -16,6 +16,15 @@ class SalesEngineTest < Minitest::Test
     names.each do |name|
       assert_equal "Schroeder-Jerde", name.name
     end
+  end
+
+  def test_startup_creates_mechant_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.merchant_repository
+
+    assert_equal MerchantRepository, repo.class
   end
 
 end

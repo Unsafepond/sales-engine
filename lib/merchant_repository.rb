@@ -10,8 +10,9 @@ require_relative 'sales_engine'
 class MerchantRepository
   attr_reader :merchants,
               :all
-  def initialize(hashes)
+  def initialize(hashes, sales_engine)
     @all = hashes.map { |hash| Merchant.new(hash.to_hash, self)}
+    @sales_engine = sales_engine
   end
 
   def find_all_by_name(name)
@@ -23,19 +24,19 @@ class MerchantRepository
   end
 
   def find_by_id(id)
-    @all.select { |merchant| merchant.id == id }.first
+    @all.find { |merchant| merchant.id == id }
   end
 
   def find_by_name(name)
-    @all.select { |merchant| merchant.name == name }.first
+    @all.find { |merchant| merchant.name == name }
   end
 
   def find_by_created_at(create_date)
-    @all.select { |merchant| merchant.created_at == create_date }.first
+    @all.find { |merchant| merchant.created_at == create_date }
   end
 
   def find_by_updated_at(update_date)
-    @all.select { |merchant| merchant.updated_at == update_date }.first
+    @all.find { |merchant| merchant.updated_at == update_date }
   end
 
   def find_all_by_id(id)
