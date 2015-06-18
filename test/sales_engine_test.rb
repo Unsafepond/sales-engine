@@ -17,20 +17,20 @@ class SalesEngineTest < Minitest::Test
       assert_equal "Schroeder-Jerde", name.name
     end
   end
-  
 
-  def test_startup_creates_item_repo
+  def test_startup_creates_invoice_item_repo
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
-    repo = se.item_repository
+    repo = se.invoice_item_repository
 
-    items = repo.find_all_by_item_id(523)
-    items.each do |item|
-      assert_equal 523, item.item_id
-      assert_equal 3, item.id
+    invoice_items = repo.find_all_by_item_id(1)
+    invoice_items.each do |invoice_item|
+      assert_equal 1, invoice_item.item_id
+      assert_equal 1, invoice_item.id
     end
   end
+  
 
   def test_startup_creates_mechant_repo
     data_directory = File.expand_path 'fixtures', __dir__
