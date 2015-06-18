@@ -23,13 +23,10 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_find_random_invoices
     repo       = InvoiceRepository.new(
-      [{id: 1, customer_id: "Sylvester"},
-        {id: 1, customer_id: "Mary"},
-        {id: 3, customer_id: "Sylvester"}
+      [{id: 1, customer_id: "Sylvester"}
       ], "fake sales engine"
     )
-    invoice_permutations = repo.all.permutation.to_a
-    assert invoice_permutations.include?(repo.random)
+    assert_equal 1, repo.random.id
 
   end
 

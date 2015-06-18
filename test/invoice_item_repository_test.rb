@@ -21,13 +21,10 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_random_invoices
     repo       = InvoiceItemRepository.new(
-      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, item_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, item_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales engine"
     )
-    invoice_permutations = repo.all.permutation.to_a
-    assert invoice_permutations.include?(repo.random)
+    assert_equal 1, repo.random.id
 
   end
 

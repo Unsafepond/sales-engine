@@ -23,34 +23,34 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_find_random_merchants
     repo       = MerchantRepository.new(
-      [{id: 1, name: "Sylvester"},
-        {id: 1, name: "Mary"},
-        {id: 3, name: "Sylvester"}
+      [{id: 1, name: "Sylvester"}
       ], 'sales engine self instance'
     )
-
-    merchant_permutations = repo.all.permutation.to_a
-      assert merchant_permutations.include?(repo.random)
+      assert_equal 1, repo.random.id
 
   end
 
   def test_find_merchant_by_id
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
+    repo       = MerchantRepository.new(
+      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
 
     ids = repo.find_by_id(2)
     assert_equal 2, ids.id
 
   end
   def test_find_merchant_by_name
-    data_directory = File.expand_path 'fixtures', __dir__
-    se = SalesEngine.new(data_directory)
-    se.startup
-    repo = se.merchant_repository
-    names = repo.find_by_name("Willms and Sons")
-      assert_equal "Willms and Sons", names.name
+    repo       = MerchantRepository.new(
+      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
+    names = repo.find_by_name("Jerrod")
+      assert_equal "Jerrod", names.name
     # end
   end
   def test_find_merchant_by_created_at
