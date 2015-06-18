@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require './lib/merchant'
+require '../lib/merchant'
 
 class MerchantTest < Minitest::Test
   def test_class
