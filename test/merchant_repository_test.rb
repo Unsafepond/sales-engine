@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/merchant_repository'
 require './lib/sales_engine'
+require 'pry'
 
 class MerchantRepositoryTest < Minitest::Test
 
@@ -33,21 +34,18 @@ class MerchantRepositoryTest < Minitest::Test
     se.startup
     repo = se.merchant_repository
 
-    ids = repo.find_by_id("2")
-    ids.each do |id|
-      assert_equal 2, id.id
-    end
+    ids = repo.find_by_id(2)
+    assert_equal 2, ids.id
+
   end
   def test_find_merchant_by_name
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup
     repo = se.merchant_repository
-
-    names = repo.find_by_name("Schroeder-Jerde")
-    names.each do |name|
-      assert_equal "Schroeder-Jerde", repo.find_by_name("Schroeder-Jerde")
-    end
+    names = repo.find_by_name("Willms and Sons")
+      assert_equal "Willms and Sons", names.name
+    # end
   end
   def test_find_merchant_by_created_at
     data_directory = File.expand_path 'fixtures', __dir__
@@ -56,13 +54,8 @@ class MerchantRepositoryTest < Minitest::Test
     repo = se.merchant_repository
 
     created_at = repo.find_by_created_at("2012-03-27 14:53:59 UTC")
-    created_at.each do |create|
-      assert_equal "2012-03-27 14:53:59 UTC", create.created_at
-    end
-      created_at = repo.find_by_created_at("2012-03-2 14:53:59 UTC")
-      created_at.each do |create|
-        assert_equal "", create.created_at
-    end
+    assert_equal "2012-03-27 14:53:59 UTC", created_at.created_at
+
   end
   def test_find_merchant_by_updated_at
     data_directory = File.expand_path 'fixtures', __dir__
@@ -71,14 +64,8 @@ class MerchantRepositoryTest < Minitest::Test
     repo = se.merchant_repository
 
     updated_at = repo.find_by_updated_at("2012-03-27 14:53:59 UTC")
-    updated_at.each do |update|
-      assert_equal "2012-03-27 14:53:59 UTC", update.updated_at
-    end
+    assert_equal "2012-03-27 14:53:59 UTC", updated_at.updated_at
 
-    updated_at = repo.find_by_updated_at("2012-27 14:53:59 UTC")
-    updated_at.each do |update|
-      assert_equal "", update.updated_at
-    end
   end
 
   def test_find_all_by_id

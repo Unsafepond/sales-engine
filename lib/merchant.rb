@@ -6,7 +6,7 @@ class Merchant
   def initialize(row, merchant_repo)
     @merchant_repo = merchant_repo
     @id = row[:id].to_i
-    @name = row[:name].capitalize
+    @name = row[:name]
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end
