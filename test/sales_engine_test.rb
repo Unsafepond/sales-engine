@@ -63,7 +63,19 @@ class SalesEngineTest < Minitest::Test
 
     results = repo.find_all_by_result("failed")
 
-    assert_equal 3, results.count
+    assert_equal 2, results.count
+
+  end
+
+  def test_startup_creates_invoices_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.invoice_repository
+
+    results = repo.find_all_by_customer_id(1)
+
+    assert_equal 8, results.count
 
   end
 

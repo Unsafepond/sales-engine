@@ -19,11 +19,9 @@ end
 
 def test_find_random_transactions
     repo = TransactionRepository.new([
-    	{id: 1}, {id: 2}, {id: 3},
-    	{id: 2}
+    	{id: 1}
     	], "fake_sales_engine_self")
-    transaction_permutations = repo.all.permutation.to_a
-    assert transaction_permutations.include?(repo.random)
+    assert_equal 1, repo.random.id
   end
 
 def test_find_transaction_by_id
