@@ -17,55 +17,55 @@ class TransactionRepository
 		@all.find { |transaction| transaction.id == id }
   end
 
-  def find_all_by_id(id)
-		@all.select { |transaction| transaction.id == id }
-	end
+  	def find_all_by_id(id)
+    	@all.select { |transaction| transaction.id == id }
+  	end
 
-	def find_by_invoice_id(invoice_id)
-		@all.find { |transaction| transaction.invoice_id == invoice_id }
-  end
+  	def find_by_invoice_id(invoice_id)
+    	@all.find { |transaction| transaction.invoice_id == invoice_id }
+  	end
 
-  def find_all_by_invoice_id(invoice_id)
-		@all.select { |transaction| transaction.invoice_id == invoice_id }
-	end
+  	def find_all_by_invoice_id(invoice_id)
+    	@all.select { |transaction| transaction.invoice_id == invoice_id }
+  	end
 
-	def find_by_credit_card_number(credit_card_number)
-		@all.find { |transaction| transaction.credit_card_number == credit_card_number }
-		end
+  	def find_by_credit_card_number(credit_card_number)
+    	@all.find { |transaction| transaction.credit_card_number == credit_card_number }
+  	end
 
-	def find_all_by_credit_card_number(credit_card_number)
-		@all.select { |transaction| transaction.credit_card_number == credit_card_number }
-	end
+  	def find_all_by_credit_card_number(credit_card_number)
+    	@all.select { |transaction| transaction.credit_card_number == credit_card_number }
+  	end
 
-	def find_by_credit_card_experation_date(credit_card_experation_date)
-		@all.find { |transaction| transaction.credit_card_experation_date == credit_card_experation_date }
-	end
+  	def find_by_credit_card_experation_date(credit_card_experation_date)
+    	@all.find { |transaction| transaction.credit_card_experation_date == credit_card_experation_date }
+  	end
 
-	def find_all_by_credit_card_experation_date(credit_card_experation_date)
-		@all.select { |transaction| transaction.credit_card_experation_date == credit_card_experation_date }
-	end
+  	def find_all_by_credit_card_experation_date(credit_card_experation_date)
+    	@all.select { |transaction| transaction.credit_card_experation_date == credit_card_experation_date }
+  	end
 
-	def find_by_result(result)
-		@all.find { |transaction| transaction.result == result }
-	end
+  	def find_by_result(result)
+    	@all.find { |transaction| transaction.result == result }
+  	end
 
-	def find_all_by_result(result)
-		@all.select { |transaction| transaction.result == result }
-	end
+  	def find_all_by_result(result)
+    	@all.select { |transaction| transaction.result == result }
+  	end
 
-	def find_by_created_at(created_at)
-		@all.find { |transaction| transaction.created_at == created_at }
-	end
+  	def find_by_created_at(created_at)
+    	@all.find { |transaction| transaction.created_at == created_at }
+  	end
 
-	def find_all_by_created_at(created_at)
-		@all.select { |transaction| transaction.created_at == created_at }
-	end
+  	def find_all_by_created_at(created_at)
+    	@all.select { |transaction| transaction.created_at == created_at }
+  	end
 
-	def find_by_updated_at(updated_at)
-		@all.find { |transaction| transaction.updated_at == updated_at }
-	end
+  	def find_by_updated_at(updated_at)
+    	@all.find { |transaction| transaction.updated_at == updated_at }
+  	end
 
-	def find_all_by_updated_at(updated_at)
-		@all.find { |transaction| transaction.updated_at == updated_at }
-	end
+  	def find_all_by_updated_at(updated_at)
+    	@all.select { |transaction| transaction.updated_at == updated_at }
+  	end
 end
