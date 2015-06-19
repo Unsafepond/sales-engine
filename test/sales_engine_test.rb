@@ -55,6 +55,18 @@ class SalesEngineTest < Minitest::Test
 
   end
 
+  def test_startup_creates_transactions_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.transaction_repository
+
+    results = repo.find_all_by_result("failed")
+
+    assert_equal 3, results.count
+
+  end
+
 
   def test_startup_creates_merchant_repo
     data_directory = File.expand_path 'fixtures', __dir__
