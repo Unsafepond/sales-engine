@@ -1,20 +1,21 @@
 require_relative "sales_engine"
-require_relative 'transactions'
+require_relative 'transaction'
 
 class TransactionRepository
 
 	attr_reader :all
-	def initialize(hashes)
-    	@all = hashes.map { |hash| Transaction.new(hash.to_hash, self)}
-  	end
+	def initialize(hashes, sales_engine)
+		@all = hashes.map { |hash| Transaction.new(hash.to_hash, self)}
+		@sales_engine = sales_engine
+	end
 
-  	def random
-    	@all.shuffle
+	def random
+		@all.shuffle.first
  	end
 
  	def find_by_id(id)
-    	@all.find { |transaction| transaction.id == id }
-  	end
+		@all.find { |transaction| transaction.id == id }
+  end
 
   	def find_all_by_id(id)
     	@all.select { |transaction| transaction.id == id }

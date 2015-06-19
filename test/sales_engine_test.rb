@@ -30,9 +30,57 @@ class SalesEngineTest < Minitest::Test
       assert_equal 1, invoice_item.id
     end
   end
-  
 
-  def test_startup_creates_mechant_repo
+  def test_startup_creates_items_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.item_repository
+
+    items = repo.find_all_by_merchant_id(1)
+
+    assert_equal 11, items.count
+
+  end
+
+  def test_startup_creates_customer_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.customer_repository
+
+    first_names = repo.find_all_by_first_name("Heber")
+
+    assert_equal 1, first_names.count
+
+  end
+
+  def test_startup_creates_transactions_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.transaction_repository
+
+    results = repo.find_all_by_result("failed")
+
+    assert_equal 2, results.count
+
+  end
+
+  def test_startup_creates_invoices_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.invoice_repository
+
+    results = repo.find_all_by_customer_id(1)
+
+    assert_equal 8, results.count
+
+  end
+
+
+  def test_startup_creates_merchant_repo
     data_directory = File.expand_path 'fixtures', __dir__
     se = SalesEngine.new(data_directory)
     se.startup

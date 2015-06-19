@@ -14,7 +14,7 @@ def test_class
     repo = ItemRepository.new([
     	{id: 1}, {id: 2}, {id: 3},
     	{id: 2}
-    	])
+    	], "fake_sales_engine")
     assert_equal 4, repo.all.count
 end
 
@@ -22,7 +22,7 @@ end
     repo = ItemRepository.new([
     	{id: 1}, {id: 2}, {id: 3},
     	{id: 2}
-    	])
+    	], "fake_sales_engine")
     item_permutations = repo.all.permutation.to_a
     assert item_permutations.include?(repo.random)
   end
@@ -31,7 +31,7 @@ end
     repo = ItemRepository.new([
     	{id: 1}, {id: 2}, {id: 3},
     	{id: 2}
-    	])
+    	], "fake_sales_engine")
     items_id = repo.find_by_id(1)
       assert_equal 1, items_id.id
   end
@@ -41,7 +41,7 @@ end
     	{id: 1},
         {id: 1},
         {id: 3}
-      ]
+      ], "fake_sales_engine"
     )
 
     ids = repo.find_all_by_id("1")
@@ -61,11 +61,10 @@ end
   end
 
 def test_find_item_by_name
-	skip
     repo = ItemRepository.new([
    	{name: "name1"}, {name: "name2"}, {name: "name3"},
    	{name: "name2"}
-   	])
+   	], "fake_sales_engine")
     items_name = repo.find_by_name("name1")
       assert_equal "name1", items_name.name
   end
@@ -75,7 +74,7 @@ def test_find_item_by_name
     	{name: "adsk"},
         {name: "adsk"},
         {name: "kjkk"}
-      ]
+      ], "fake_sales_engine"
     )
 
     names = repo.find_all_by_name("adsk")
@@ -95,11 +94,10 @@ def test_find_item_by_name
   end
 
   def test_find_item_by_description
-  	skip
     repo = ItemRepository.new([
    	{description: "description1"}, {description: "description2"}, {description: "description3"},
    	{description: "description2"}
-   	])
+   	], "fake_sales_engine")
     items_description = repo.find_by_description("description1")
       assert_equal "description1", items_description.description
   end
@@ -109,7 +107,7 @@ def test_find_item_by_name
     	{description: "adsk"},
         {description: "adsk"},
         {description: "kjkk"}
-      ]
+      ], "fake_sales_engine"
     )
 
     descriptions = repo.find_all_by_description("adsk")
@@ -129,11 +127,10 @@ def test_find_item_by_name
   end
 
   def test_find_item_by_unit_price
-  	skip
     repo = ItemRepository.new([
    	{unit_price: 20.0}, {unit_price: 30.0}, {unit_price: 40.0},
    	{unit_price: 30.0}
-   	])
+   	], "fake_sales_engine")
     items_unit_price = repo.find_by_unit_price(20.0)
       assert_equal 20.0, items_unit_price.unit_price
   end
@@ -143,7 +140,7 @@ def test_find_item_by_name
     	{unit_price: 20.0},
         {unit_price: 20.0},
         {unit_price: 30.0}
-      ]
+      ], "fake_sales_engine"
     )
 
     unit_prices = repo.find_all_by_unit_price(20.0)
@@ -163,11 +160,10 @@ def test_find_item_by_name
   end
 
    def test_find_item_by_merchant_id
-   	skip
     repo = ItemRepository.new([
    	{merchant_id: 20}, {merchant_id: 30}, {merchant_id: 40},
    	{merchant_id: 30}
-   	])
+   	], "fake_sales_engine")
     items_merchant_id = repo.find_by_merchant_id(20)
       assert_equal 20, items_merchant_id.merchant_id
   end
@@ -177,7 +173,7 @@ def test_find_item_by_name
     	{merchant_id: 2},
         {merchant_id: 2},
         {merchant_id: 3}
-      ]
+      ], "fake_sales_engine"
     )
 
     merchant_ids = repo.find_all_by_merchant_id(2)
@@ -200,7 +196,7 @@ def test_find_item_by_name
     repo = ItemRepository.new([
    	{created_at: "20"}, {created_at: "30"}, {created_at: "40"},
    	{created_at: "30"}
-   	])
+   	], "fake_sales_engine")
     items_created_at = repo.find_by_created_at("20")
       assert_equal "20", items_created_at.created_at
   end
@@ -210,7 +206,7 @@ def test_find_item_by_name
     	{created_at: "string"},
         {created_at: "string"},
         {created_at: "other string"}
-      ]
+      ], "fake_sales_engine"
     )
 
     created_ats = repo.find_all_by_created_at("string")
@@ -233,7 +229,7 @@ def test_find_item_by_name
     repo = ItemRepository.new([
    	{updated_at: "20"}, {updated_at: "30"}, {updated_at: "40"},
    	{updated_at: "30"}
-   	])
+   	], "fake_sales_engine")
     items_updated_at = repo.find_by_updated_at("20")
       assert_equal "20", items_updated_at.updated_at
   end
@@ -243,7 +239,7 @@ def test_find_item_by_name
     	{updated_at: "string"},
         {updated_at: "string"},
         {updated_at: "other string"}
-      ]
+      ], "fake_sales_engine"
     )
 
     updated_ats = repo.find_all_by_updated_at("string")
