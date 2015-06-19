@@ -1,6 +1,6 @@
 require_relative 'transaction_repository'
 
-class Item
+class Transaction
   attr_reader :item_repo,
               :id,
               :invoice_id,
