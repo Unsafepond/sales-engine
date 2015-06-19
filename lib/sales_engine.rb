@@ -35,6 +35,11 @@ class SalesEngine
     @transaction_repository   = TransactionRepository.new(transactions, self)
   end
 
+  def find_all_items_by_merchant_id(id)
+    @item_repository.find_all_by_merchant_id(id)
+  end
+
+
   private
 
   def parse(filename)

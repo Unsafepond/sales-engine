@@ -10,6 +10,8 @@ class Merchant
     @updated_at = row[:updated_at]
   end
 
-
+  def items
+    @merchant_repo.find_all_items_by_merchant_id(id)
+  end
 end
 
