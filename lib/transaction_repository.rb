@@ -1,11 +1,12 @@
 require_relative "sales_engine"
-require_relative 'transactions'
+require_relative 'transaction'
 
 class TransactionRepository
 
 	attr_reader :all
-	def initialize(hashes)
-    	@all = hashes.map { |hash| Item.new(hash.to_hash, self)}
+	def initialize(hashes, sales_engine)
+    	@all = hashes.map { |hash| Transaction.new(hash.to_hash, self)}
+			@sales_engine = sales_engine
   	end
 
   	def random

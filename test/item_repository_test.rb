@@ -61,7 +61,6 @@ end
   end
 
 def test_find_item_by_name
-	skip
     repo = ItemRepository.new([
    	{name: "name1"}, {name: "name2"}, {name: "name3"},
    	{name: "name2"}
@@ -95,7 +94,6 @@ def test_find_item_by_name
   end
 
   def test_find_item_by_description
-  	skip
     repo = ItemRepository.new([
    	{description: "description1"}, {description: "description2"}, {description: "description3"},
    	{description: "description2"}
@@ -129,7 +127,6 @@ def test_find_item_by_name
   end
 
   def test_find_item_by_unit_price
-  	skip
     repo = ItemRepository.new([
    	{unit_price: 20.0}, {unit_price: 30.0}, {unit_price: 40.0},
    	{unit_price: 30.0}
@@ -163,7 +160,6 @@ def test_find_item_by_name
   end
 
    def test_find_item_by_merchant_id
-   	skip
     repo = ItemRepository.new([
    	{merchant_id: 20}, {merchant_id: 30}, {merchant_id: 40},
    	{merchant_id: 30}
