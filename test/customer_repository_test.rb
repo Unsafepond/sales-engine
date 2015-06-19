@@ -22,9 +22,8 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_find_random_customers
-    skip
     repo       = CustomerRepository.new(
-      [{id: 1, name: "Sylvester"}
+      [{id: 1, first_name: "Sylvester"}
       ], 'sales engine self instance'
     )
     assert_equal 1, repo.random.id
@@ -32,7 +31,6 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_find_customer_by_id
-    skip
     repo       = CustomerRepository.new(
       [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
         {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
@@ -44,24 +42,34 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal 2, ids.id
 
   end
-  def test_find_customer_by_name
-    skip
+
+  def test_find_customer_by_first_name
     repo       = CustomerRepository.new(
-      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, first_name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales egine"
     )
-    names = repo.find_by_name("Jerrod")
-    assert_equal "Jerrod", names.name
-    # end
+    names = repo.find_by_first_name("Jerrod")
+    assert_equal "Jerrod", names.first_name
   end
-  def test_find_customer_by_created_at
-    skip
+
+  def test_find_customer_by_last_name
     repo       = CustomerRepository.new(
-      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, last_name: "Dorrance", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, last_name: "Pond", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, last_name: "Dorrance", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
+    names = repo.find_by_last_name("Pond")
+    assert_equal "Pond", names.last_name
+  end
+
+  def test_find_customer_by_created_at
+    repo       = CustomerRepository.new(
+      [{id: 1, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, first_name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales egine"
     )
 
@@ -70,11 +78,10 @@ class CustomerRepositoryTest < Minitest::Test
 
   end
   def test_find_customer_by_updated_at
-    skip
     repo       = CustomerRepository.new(
-      [{id: 1, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, first_name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, first_name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, first_name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales egine"
     )
 
@@ -84,11 +91,10 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_id
-    skip
     repo       = CustomerRepository.new(
-      [{id: 1, name: "Sylvester"},
-        {id: 1, name: "Mary"},
-        {id: 3, name: "Sylvester"}
+      [{id: 1, first_name: "Sylvester"},
+        {id: 1, first_name: "Mary"},
+        {id: 3, first_name: "Sylvester"}
       ], 'sales engine self instance'
     )
 
@@ -108,37 +114,59 @@ class CustomerRepositoryTest < Minitest::Test
     end
   end
 
-  def test_find_all_by_name
-    skip
+  def test_find_all_by_first_name
     repo       = CustomerRepository.new(
-      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, first_name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales egine"
     )
 
-    names = repo.find_all_by_name("Mike")
-    names.each do |name|
-      assert_equal 2, names.map { |name| name.name }.count
+    first_names = repo.find_all_by_first_name("Mike")
+    first_names.each do |first_name|
+      assert_equal 2, first_names.map { |first_name| first_name.first_name }.count
     end
 
-    names = repo.find_all_by_name("Jerrod")
-    names.each do |name|
-      assert_equal ["Jerrod"], names.map { |name| name.name }
+    first_names = repo.find_all_by_first_name("Jerrod")
+    first_names.each do |first_name|
+      assert_equal ["Jerrod"], first_names.map { |first_name| first_name.first_name }
     end
 
-    names = repo.find_all_by_name("Tim")
-    names.each do |name|
-      assert_equal [], names.map { |name| name.name }
+    first_names = repo.find_all_by_first_name("Tim")
+    first_names.each do |first_name|
+      assert_equal [], first_names.map { |first_name| first_name.first_name }
+    end
+  end
+
+  def test_find_all_by_last_name
+    repo       = CustomerRepository.new(
+      [{id: 1, last_name: "Dorrance", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, last_name: "Pond", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, last_name: "Dorrance", created_at: "2012-03-27 14:53:59 UTC"}
+      ], "fake sales egine"
+    )
+
+    last_names = repo.find_all_by_last_name("Mike")
+    last_names.each do |last_name|
+      assert_equal 2, last_names.map { |last_name| last_name.last_name }.count
+    end
+
+    last_names = repo.find_all_by_last_name("Jerrod")
+    last_names.each do |last_name|
+      assert_equal ["Jerrod"], last_names.map { |last_name| last_name.last_name }
+    end
+
+    last_names = repo.find_all_by_last_name("Tim")
+    last_names.each do |last_name|
+      assert_equal [], last_names.map { |last_name| last_name.last_name }
     end
   end
 
   def test_find_all_by_created_at
-    skip
     repo       = CustomerRepository.new(
-      [{id: 1, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, first_name: "Jerrod", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, first_name: "Mike", created_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales egine"
     )
 
@@ -159,11 +187,10 @@ class CustomerRepositoryTest < Minitest::Test
   end
 
   def test_find_all_by_updated_at
-    skip
     repo       = CustomerRepository.new(
-      [{id: 1, first_name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, first_name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, first_name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, first_first_name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, first_first_name: "Jerrod", updated_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, first_first_name: "Mike", updated_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales egine"
     )
 

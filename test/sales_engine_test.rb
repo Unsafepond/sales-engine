@@ -43,6 +43,18 @@ class SalesEngineTest < Minitest::Test
 
   end
 
+  def test_startup_creates_customer_repo
+    data_directory = File.expand_path 'fixtures', __dir__
+    se = SalesEngine.new(data_directory)
+    se.startup
+    repo = se.customer_repository
+
+    first_names = repo.find_all_by_first_name("Heber")
+
+    assert_equal 1, first_names.count
+
+  end
+
 
   def test_startup_creates_merchant_repo
     data_directory = File.expand_path 'fixtures', __dir__
