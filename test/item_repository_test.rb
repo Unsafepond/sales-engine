@@ -20,11 +20,10 @@ end
 
  def test_find_random_items
     repo = ItemRepository.new([
-    	{id: 1}, {id: 2}, {id: 3},
-    	{id: 2}
+    	{id: 1}
     	], "fake_sales_engine")
-    item_permutations = repo.all.permutation.to_a
-    assert item_permutations.include?(repo.random)
+
+    assert_equal 1, repo.random.id
   end
 
   def test_find_item_by_id

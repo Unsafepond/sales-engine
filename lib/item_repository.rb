@@ -9,7 +9,7 @@ class ItemRepository
   	end
 
  	def random
-    	@all.shuffle
+    	@all.shuffle.first
  	end
 
   def find_by_id(id)

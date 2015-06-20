@@ -67,5 +67,9 @@ class TransactionRepository
 
   	def find_all_by_updated_at(updated_at)
     	@all.select { |transaction| transaction.updated_at == updated_at }
-  	end
+		end
+
+		def find_invoice_by_invoice_id(invoice_id)
+			@sales_engine.find_invoice_by_invoice_id(invoice_id)
+		end
 end

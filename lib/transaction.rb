@@ -21,8 +21,8 @@ class Transaction
     @updated_at = row[:updated_at]
   end
 
-  def invoices
-    @transaction_repo.find_invoice_by_transaction_id(id)
+  def invoice
+    @transaction_repo.find_invoice_by_invoice_id(invoice_id)
   end
 end
 # id,invoice_id,credit_card_number,credit_card_expiration_date,

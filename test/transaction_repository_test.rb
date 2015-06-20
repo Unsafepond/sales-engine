@@ -254,5 +254,13 @@ def test_find_transaction_by_id
       assert_equal [], updated_ats.map { |updated_at| updated_at.updated_at }
     end
   end
+
+  def test_pass_invoice_id_up_to_sales_engine
+    sales_engine = Minitest::Mock.new
+    repo = TransactionRepository.new([{id: 23, invoice_id: 231}], sales_engine)
+    sales_engine.expect(:find_invoice_by_invoice_id, [], [231])
+    repo.find_invoice_by_invoice_id(231)
+    sales_engine.verify
+  end
  
 end

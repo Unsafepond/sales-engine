@@ -105,6 +105,15 @@ class SalesEngineTest < Minitest::Test
     assert_equal 1, result[0].id
   end
 
+  def test_sales_engine_can_get_invoice_by_invoice_id
+    sales_engine = SalesEngine.new("data_dir")
+    repo = InvoiceRepository.new([{id: 3, customer_id: 23}], sales_engine)
+    sales_engine.invoice_repository = repo
+    result = sales_engine.find_invoice_by_invoice_id(3)
+    assert_equal 23, result.customer_id
+
+  end
+
 end
 
 
