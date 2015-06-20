@@ -55,4 +55,8 @@ class CustomerRepository
     @all.select { |customer| customer.updated_at == updated_at }
   end
 
+  def find_all_invoices_by_customer_id(id)
+    @sales_engine.find_all_invoices_by_customer_id(id)
+  end
+
 end
