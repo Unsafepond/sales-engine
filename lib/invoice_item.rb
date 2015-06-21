@@ -13,4 +13,12 @@ class InvoiceItem
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end
+
+  def invoice
+    @invoice_repo.find_invoice_by_invoice_id(invoice_id)
+  end
+
+  def item
+    @invoice_repo.find_item_by_item_id(item_id)
+  end
 end
