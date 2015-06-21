@@ -2,6 +2,9 @@ require 'csv'
 require_relative 'merchant_repository'
 require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
+require_relative 'item_repository'
+require_relative 'customer_repository'
+require_relative 'transaction_repository'
 require 'pry'
 # etc
 #  read files for each type of supplied csv
@@ -84,8 +87,7 @@ class SalesEngine
   end
 
   def find_items_in_invoice(id)
-    binding.pry
-    find_invoices_invoice_items(id)
+    find_invoices_invoice_items(id).item_id
 
   end
 
