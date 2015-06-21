@@ -97,6 +97,14 @@ class SalesEngineTest < Minitest::Test
     assert_equal 1, result[0].id
   end
 
+  def test_sales_engine_can_get_all_invoices_by_merchant_id
+    sales_engine = SalesEngine.new("data_dir")
+    repo = InvoiceRepository.new([{id: 1, merchant_id: 314}], sales_engine)
+    sales_engine.invoice_repository = repo
+    result = sales_engine.find_all_invoices_by_merchant_id(314)
+    assert_equal 1, result[0].id
+  end
+
   def test_sales_engine_can_get_all_invoices_by_customer_id
     sales_engine = SalesEngine.new("data_dir")
     repo = InvoiceRepository.new([{id: 1, customer_id: 23}], sales_engine)
