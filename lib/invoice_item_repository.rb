@@ -1,5 +1,6 @@
 require_relative 'sales_engine'
 require_relative 'invoice_item'
+require 'bigdecimal'
 
 class InvoiceItemRepository
   attr_reader :all

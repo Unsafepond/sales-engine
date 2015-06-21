@@ -12,15 +12,15 @@ def test_class
 
   def test_find_all_items
     repo = ItemRepository.new([
-    	{id: 1}, {id: 2}, {id: 3},
-    	{id: 2}
+    	{id: 1, unit_price: "43215"}, {id: 2, unit_price: "43215"}, {id: 3, unit_price: "43215"},
+    	{id: 2, unit_price: "43215"}
     	], "fake_sales_engine")
     assert_equal 4, repo.all.count
 end
 
  def test_find_random_items
     repo = ItemRepository.new([
-    	{id: 1}
+    	{id: 1, unit_price: "43215"}
     	], "fake_sales_engine")
 
     assert_equal 1, repo.random.id
@@ -28,8 +28,8 @@ end
 
   def test_find_item_by_id
     repo = ItemRepository.new([
-    	{id: 1}, {id: 2}, {id: 3},
-    	{id: 2}
+    	{id: 1,unit_price: "43215"}, {id: 2, unit_price: "43215"}, {id: 3, unit_price: "43215"},
+    	{id: 2, unit_price: "43215"}
     	], "fake_sales_engine")
     items_id = repo.find_by_id(1)
       assert_equal 1, items_id.id
@@ -37,9 +37,9 @@ end
 
   def test_find_all_by_id
     repo       = ItemRepository.new([ 
-    	{id: 1},
-        {id: 1},
-        {id: 3}
+    	{id: 1, unit_price: "43215"},
+        {id: 1, unit_price: "43215"},
+        {id: 3, unit_price: "43215"}
       ], "fake_sales_engine"
     )
 
@@ -61,8 +61,8 @@ end
 
 def test_find_item_by_name
     repo = ItemRepository.new([
-   	{name: "name1"}, {name: "name2"}, {name: "name3"},
-   	{name: "name2"}
+   	{name: "name1", unit_price: "43215"}, {name: "name2", unit_price: "43215"}, {name: "name3", unit_price: "43215"},
+   	{name: "name2", unit_price: "43215"}
    	], "fake_sales_engine")
     items_name = repo.find_by_name("name1")
       assert_equal "name1", items_name.name
@@ -70,9 +70,9 @@ def test_find_item_by_name
 
   def test_find_all_by_name
     repo       = ItemRepository.new([ 
-    	{name: "adsk"},
-        {name: "adsk"},
-        {name: "kjkk"}
+    	{name: "adsk", unit_price: "43215"},
+        {name: "adsk", unit_price: "43215"},
+        {name: "kjkk", unit_price: "43215"}
       ], "fake_sales_engine"
     )
 
@@ -94,8 +94,8 @@ def test_find_item_by_name
 
   def test_find_item_by_description
     repo = ItemRepository.new([
-   	{description: "description1"}, {description: "description2"}, {description: "description3"},
-   	{description: "description2"}
+   	{description: "description1", unit_price: "43215"}, {description: "description2", unit_price: "43215"}, {description: "description3", unit_price: "43215"},
+   	{description: "description2", unit_price: "43215"}
    	], "fake_sales_engine")
     items_description = repo.find_by_description("description1")
       assert_equal "description1", items_description.description
@@ -103,9 +103,9 @@ def test_find_item_by_name
 
   def test_find_all_by_description
     repo       = ItemRepository.new([ 
-    	{description: "adsk"},
-        {description: "adsk"},
-        {description: "kjkk"}
+    	{description: "adsk", unit_price: "43215"},
+        {description: "adsk", unit_price: "43215"},
+        {description: "kjkk", unit_price: "43215"}
       ], "fake_sales_engine"
     )
 
@@ -127,29 +127,29 @@ def test_find_item_by_name
 
   def test_find_item_by_unit_price
     repo = ItemRepository.new([
-   	{unit_price: 20.0}, {unit_price: 30.0}, {unit_price: 40.0},
-   	{unit_price: 30.0}
+   	{unit_price: "43215"}, {unit_price: "43215"}, {unit_price: "2000"},
+   	{unit_price: "43215"}
    	], "fake_sales_engine")
-    items_unit_price = repo.find_by_unit_price(20.0)
-      assert_equal 20.0, items_unit_price.unit_price
+    items_unit_price = repo.find_by_unit_price(20.00)
+      assert_equal 20.00, items_unit_price.unit_price
   end
 
   def test_find_all_by_unit_price
     repo       = ItemRepository.new([ 
-    	{unit_price: 20.0},
-        {unit_price: 20.0},
-        {unit_price: 30.0}
+    	{unit_price: "2000"},
+        {unit_price:" 2000"},
+        {unit_price: "3000"}
       ], "fake_sales_engine"
     )
 
     unit_prices = repo.find_all_by_unit_price(20.0)
     unit_prices.each do |unit_price|
-      assert_equal [20.0, 20.0], unit_prices.map { |unit_price| unit_price.unit_price }
+      assert_equal [20.00, 20.00], unit_prices.map { |unit_price| unit_price.unit_price }
     end
 
     unit_prices = repo.find_all_by_unit_price(30.0)
     unit_prices.each do |unit_price|
-      assert_equal [30.0], unit_prices.map { |unit_price| unit_price.unit_price }
+      assert_equal [30.00], unit_prices.map { |unit_price| unit_price.unit_price }
     end
 
     unit_prices = repo.find_all_by_unit_price(999.9)
@@ -160,8 +160,8 @@ def test_find_item_by_name
 
    def test_find_item_by_merchant_id
     repo = ItemRepository.new([
-   	{merchant_id: 20}, {merchant_id: 30}, {merchant_id: 40},
-   	{merchant_id: 30}
+   	{merchant_id: 20, unit_price: "43215"}, {merchant_id: 30, unit_price: "43215"}, {merchant_id: 40, unit_price: "43215"},
+   	{merchant_id: 30, unit_price: "43215"}
    	], "fake_sales_engine")
     items_merchant_id = repo.find_by_merchant_id(20)
       assert_equal 20, items_merchant_id.merchant_id
@@ -169,9 +169,9 @@ def test_find_item_by_name
 
   def test_find_all_by_merchant_id
     repo       = ItemRepository.new([ 
-    	{merchant_id: 2},
-        {merchant_id: 2},
-        {merchant_id: 3}
+    	{merchant_id: 2, unit_price: "43215"},
+        {merchant_id: 2, unit_price: "43215"},
+        {merchant_id: 3, unit_price: "43215"}
       ], "fake_sales_engine"
     )
 
@@ -193,8 +193,8 @@ def test_find_item_by_name
 
   def test_find_item_by_created_at
     repo = ItemRepository.new([
-   	{created_at: "20"}, {created_at: "30"}, {created_at: "40"},
-   	{created_at: "30"}
+   	{created_at: "20", unit_price: "43215"}, {created_at: "30", unit_price: "43215"}, {created_at: "40", unit_price: "43215"},
+   	{created_at: "30", unit_price: "43215"}
    	], "fake_sales_engine")
     items_created_at = repo.find_by_created_at("20")
       assert_equal "20", items_created_at.created_at
@@ -202,9 +202,9 @@ def test_find_item_by_name
 
   def test_find_all_by_created_at
     repo       = ItemRepository.new([ 
-    	{created_at: "string"},
-        {created_at: "string"},
-        {created_at: "other string"}
+    	{created_at: "string", unit_price: "43215"},
+        {created_at: "string", unit_price: "43215"},
+        {created_at: "other string", unit_price: "43215"}
       ], "fake_sales_engine"
     )
 
@@ -226,8 +226,8 @@ def test_find_item_by_name
 
   def test_find_item_by_updated_at
     repo = ItemRepository.new([
-   	{updated_at: "20"}, {updated_at: "30"}, {updated_at: "40"},
-   	{updated_at: "30"}
+   	{updated_at: "20", unit_price: "43215"}, {updated_at: "30", unit_price: "43215"}, {updated_at: "40", unit_price: "43215"},
+   	{updated_at: "30", unit_price: "43215"}
    	], "fake_sales_engine")
     items_updated_at = repo.find_by_updated_at("20")
       assert_equal "20", items_updated_at.updated_at
@@ -235,9 +235,9 @@ def test_find_item_by_name
 
   def test_find_all_by_updated_at
     repo       = ItemRepository.new([ 
-    	{updated_at: "string"},
-        {updated_at: "string"},
-        {updated_at: "other string"}
+    	{updated_at: "string", unit_price: "43215"},
+        {updated_at: "string" ,unit_price: "43215"},
+        {updated_at: "other string", unit_price: "43215"}
       ], "fake_sales_engine"
     )
 
@@ -259,7 +259,7 @@ def test_find_item_by_name
 
   def test_pass_item_id_up_to_sales_engine
     sales_engine = Minitest::Mock.new
-    repo = ItemRepository.new([{id: 23, item_id: 231}], sales_engine)
+    repo = ItemRepository.new([{id: 23, item_id: 231, unit_price: "43215"}], sales_engine)
     sales_engine.expect(:find_all_invoice_items_by_item_id, [], [231])
     repo.find_all_invoice_items_by_item_id(231)
     sales_engine.verify
@@ -267,7 +267,7 @@ def test_find_item_by_name
 
   def test_pass_merchant_id_up_to_sales_engine
     sales_engine = Minitest::Mock.new
-    repo = ItemRepository.new([{id: 23, merchant_id: 231}], sales_engine)
+    repo = ItemRepository.new([{id: 23, merchant_id: 231, unit_price: "43215"}], sales_engine)
     sales_engine.expect(:find_merchant_by_merchant_id, [], [231])
     repo.find_merchant_by_merchant_id(231)
     sales_engine.verify

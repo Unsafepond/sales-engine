@@ -91,7 +91,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_sales_engine_can_get_all_items_by_merchant_id
     sales_engine = SalesEngine.new("data_dir")
-    repo = ItemRepository.new([{id: 1, merchant_id: 23}], sales_engine)
+    repo = ItemRepository.new([{id: 1, merchant_id: 23, unit_price: "43215"}], sales_engine)
     sales_engine.item_repository = repo
     result = sales_engine.find_all_items_by_merchant_id(23)
     assert_equal 1, result[0].id

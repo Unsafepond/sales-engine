@@ -1,4 +1,5 @@
 require 'pry'
+require 'bigdecimal'
 require_relative 'customer'
 require_relative 'sales_engine'
 

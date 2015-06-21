@@ -2,6 +2,7 @@
 #
 require 'csv'
 require 'pry'
+require 'bigdecimal'
 # require_relative 'parser'
 require_relative 'merchant'
 require_relative 'sales_engine'

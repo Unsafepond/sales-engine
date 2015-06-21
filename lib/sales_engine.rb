@@ -1,4 +1,5 @@
 require 'csv'
+require 'bigdecimal'
 require_relative 'merchant_repository'
 require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
