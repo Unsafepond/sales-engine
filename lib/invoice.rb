@@ -28,4 +28,8 @@ class Invoice
   def transactions
     invoice_repo.find_invoices_transactions(id)
   end
+
+  def items
+    invoice_repo.find_items_in_invoice(id)
+  end
 end

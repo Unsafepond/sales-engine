@@ -83,6 +83,12 @@ class SalesEngine
     transaction_repository.find_all_by_invoice_id(id)
   end
 
+  def find_items_in_invoice(id)
+    binding.pry
+    find_invoices_invoice_items(id)
+
+  end
+
 
 
   private

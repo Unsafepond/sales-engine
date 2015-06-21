@@ -262,4 +262,13 @@ class InvoiceRepositoryTest < Minitest::Test
     sales_engine.verify
   end
 
+  def test_pass_invoice_id_for_items_up_to_sales_engine
+    skip
+    sales_engine = Minitest::Mock.new
+    repo = InvoiceRepository.new([{id: 32, customer_id: 31}], sales_engine)
+    sales_engine.expect(:find_items_in_invoice, [], [32])
+    repo.find_items_in_invoice(32)
+    sales_engine.verify
+  end
+
 end

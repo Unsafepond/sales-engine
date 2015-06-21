@@ -37,4 +37,12 @@ class InvoiceTest < Minitest::Test
     invoice.transactions
     repo.verify
   end
+
+  def test_it_can_pass_id_for_items_instance_up_to_item_repo
+    repo = Minitest::Mock.new
+    invoice = Invoice.new({ id: "23", customer_id: "231" }, repo)
+    repo.expect(:find_items_in_invoice, [], [invoice.id])
+    invoice.items
+    repo.verify
+  end
 end
