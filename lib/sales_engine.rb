@@ -88,8 +88,14 @@ class SalesEngine
   end
 
   def find_items_in_invoice(id)
-    find_invoices_invoice_items(id).item_id
-
+    result = invoice_item_repository.find_all_by_invoice_id(id)
+    item_ids = result.map do |invoice_items|
+      invoice_items.item_id
+    end
+    items = item_ids.map do |item_id|
+      item_repository.find_all_by_id(item_id)
+    end
+    flattened_item = items.flatten
   end
 
 
