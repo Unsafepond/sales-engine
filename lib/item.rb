@@ -24,6 +24,10 @@ class Item
   def invoice_items
     item_repo.find_all_invoice_items_by_item_id(id)
   end
+
+  def merchant
+    item_repo.find_merchant_by_merchant_id(merchant_id)
+  end
 end
 # id,name,description,unit_price,merchant_id,
 # created_at,updated_at

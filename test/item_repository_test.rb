@@ -265,5 +265,13 @@ def test_find_item_by_name
     sales_engine.verify
   end
 
+  def test_pass_merchant_id_up_to_sales_engine
+    sales_engine = Minitest::Mock.new
+    repo = ItemRepository.new([{id: 23, merchant_id: 231}], sales_engine)
+    sales_engine.expect(:find_merchant_by_merchant_id, [], [231])
+    repo.find_merchant_by_merchant_id(231)
+    sales_engine.verify
+  end
+
 
 end
