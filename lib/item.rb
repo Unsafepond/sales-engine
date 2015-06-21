@@ -20,6 +20,10 @@ class Item
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end
+
+  def invoice_items
+    item_repo.find_all_invoice_items_by_item_id(id)
+  end
 end
 # id,name,description,unit_price,merchant_id,
 # created_at,updated_at

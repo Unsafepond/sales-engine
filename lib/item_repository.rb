@@ -68,4 +68,8 @@ class ItemRepository
     @all.select { |item| item.updated_at == updated_at }
   end
 
+  def find_all_invoice_items_by_item_id(item_id)
+    @sales_engine.find_all_invoice_items_by_item_id(item_id)
+  end
+
 end
