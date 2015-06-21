@@ -1,7 +1,11 @@
 require 'csv'
+require 'bigdecimal'
 require_relative 'merchant_repository'
 require_relative 'invoice_repository'
 require_relative 'invoice_item_repository'
+require_relative 'item_repository'
+require_relative 'customer_repository'
+require_relative 'transaction_repository'
 require 'pry'
 # etc
 #  read files for each type of supplied csv
@@ -34,6 +38,67 @@ class SalesEngine
     @customer_repository      = CustomerRepository.new(customers, self)
     @transaction_repository   = TransactionRepository.new(transactions, self)
   end
+
+  def find_all_items_by_merchant_id(id)
+    item_repository.find_all_by_merchant_id(id)
+  end
+
+  def find_all_invoices_by_merchant_id(id)
+    invoice_repository.find_all_by_merchant_id(id)
+  end
+
+  def find_all_invoices_by_customer_id(id)
+    invoice_repository.find_all_by_customer_id(id)
+  end
+
+  def find_invoice_by_invoice_id(id)
+    invoice_repository.find_by_id(id)
+  end
+
+  def find_all_invoice_items_by_item_id(id)
+    invoice_item_repository.find_all_by_item_id(id)
+  end
+
+  def find_merchant_by_merchant_id(id)
+    merchant_repository.find_by_id(id)
+  end
+
+  def find_invoice_by_invoice_id(id)
+    invoice_repository.find_by_id(id)
+  end
+
+  def find_item_by_item_id(id)
+    item_repository.find_by_id(id)
+  end
+
+  def find_invoice_merchant_with_merchant_id(id)
+    merchant_repository.find_by_id(id)
+  end
+
+  def find_invoice_customer_with_customer_id(id)
+    customer_repository.find_by_id(id)
+  end
+
+  def find_invoices_invoice_items(id)
+    invoice_item_repository.find_all_by_invoice_id(id)
+  end
+
+  def find_invoices_transactions(id)
+    transaction_repository.find_all_by_invoice_id(id)
+  end
+
+  def find_items_in_invoice(id)
+    result = invoice_item_repository.find_all_by_invoice_id(id)
+    item_ids = result.map do |invoice_items|
+      invoice_items.item_id
+    end
+    items = item_ids.map do |item_id|
+      item_repository.find_all_by_id(item_id)
+    end
+    flattened_item = items.flatten
+  end
+
+
 
   private
 

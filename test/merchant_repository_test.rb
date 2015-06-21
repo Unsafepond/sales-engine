@@ -174,5 +174,21 @@ class MerchantRepositoryTest < Minitest::Test
     end
   end
 
+  def test_pass_merchant_id_up_to_sales_engine
+    sales_engine = Minitest::Mock.new
+    repo = MerchantRepository.new([{id: 23}], sales_engine)
+    sales_engine.expect(:find_all_items_by_merchant_id, [], [23])
+    repo.find_all_items_by_merchant_id(23)
+    sales_engine.verify
+  end
+
+  def test_pass_merchant_id_for_invoices_up_to_sales_engine
+    sales_engine = Minitest::Mock.new
+    repo = MerchantRepository.new([{id: 32}], sales_engine)
+    sales_engine.expect(:find_all_invoices_by_merchant_id, [], [32])
+    repo.find_all_invoices_by_merchant_id(32)
+    sales_engine.verify
+  end
+
 
 end

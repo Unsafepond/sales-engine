@@ -12,4 +12,24 @@ class Invoice
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end
+
+  def merchant
+    invoice_repo.find_invoice_merchant_with_merchant_id(merchant_id)
+  end
+
+  def customer
+    invoice_repo.find_invoice_customer_with_customer_id(customer_id)
+  end
+
+  def invoice_items
+    invoice_repo.find_invoices_invoice_items(id)
+  end
+
+  def transactions
+    invoice_repo.find_invoices_transactions(id)
+  end
+
+  def items
+    invoice_repo.find_items_in_invoice(id)
+  end
 end

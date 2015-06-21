@@ -112,47 +112,47 @@ def test_find_transaction_by_id
       assert_equal ["string", "string"], credit_card_numbers.map { |credit_card_number| credit_card_number.credit_card_number }
     end
 
-    credit_card_experation_dates = repo.find_all_by_credit_card_experation_date("other string")
-    credit_card_experation_dates.each do |credit_card_experation_date|
-      assert_equal ["other string"], credit_card_experation_dates.map { |credit_card_experation_date| credit_card_experation_date.credit_card_experation_date }
+    credit_card_expiration_dates = repo.find_all_by_credit_card_expiration_date("other string")
+    credit_card_expiration_dates.each do |credit_card_expiration_date|
+      assert_equal ["other string"], credit_card_expiration_dates.map { |credit_card_expiration_date| credit_card_expiration_date.credit_card_expiration_date }
     end
 
-    credit_card_experation_dates = repo.find_all_by_credit_card_experation_date("jjhjkhj")
-    credit_card_experation_dates.each do |credit_card_experation_date|
-      assert_equal [], credit_card_experation_dates.map { |credit_card_experation_date| credit_card_experation_date.credit_card_experation_date }
+    credit_card_expiration_dates = repo.find_all_by_credit_card_expiration_date("jjhjkhj")
+    credit_card_expiration_dates.each do |credit_card_expiration_date|
+      assert_equal [], credit_card_expiration_dates.map { |credit_card_expiration_date| credit_card_expiration_date.credit_card_expiration_date }
     end
   end
 
-  def test_find_transaction_by_credit_card_experation_date
+  def test_find_transaction_by_credit_card_expiration_date
     repo = TransactionRepository.new([
-    	{credit_card_experation_date: "1"}, {credit_card_experation_date: "2"}, {credit_card_experation_date: "3"},
-    	{credit_card_experation_date: "2"}
+    	{credit_card_expiration_date: "1"}, {credit_card_expiration_date: "2"}, {credit_card_expiration_date: "3"},
+    	{credit_card_expiration_date: "2"}
     	], "fake_sales_engine_self")
-    transactions_credit_card_experation_date = repo.find_by_credit_card_experation_date("1")
-      assert_equal "1", transactions_credit_card_experation_date.credit_card_experation_date
+    transactions_credit_card_expiration_date = repo.find_by_credit_card_expiration_date("1")
+      assert_equal "1", transactions_credit_card_expiration_date.credit_card_expiration_date
   end
 
-  def test_find_all_by_credit_card_experation_date
+  def test_find_all_by_credit_card_expiration_date
     repo       = TransactionRepository.new([ 
-    	{credit_card_experation_date: "string"},
-        {credit_card_experation_date: "string"},
-        {credit_card_experation_date: "other string"}
+    	{credit_card_expiration_date: "string"},
+        {credit_card_expiration_date: "string"},
+        {credit_card_expiration_date: "other string"}
       ], "fake_sales_engine"
     )
 
-    credit_card_experation_dates = repo.find_all_by_credit_card_experation_date("string")
-    credit_card_experation_dates.each do |credit_card_experation_date|
-      assert_equal ["string", "string"], credit_card_experation_dates.map { |credit_card_experation_date| credit_card_experation_date.credit_card_experation_date }
+    credit_card_expiration_dates = repo.find_all_by_credit_card_expiration_date("string")
+    credit_card_expiration_dates.each do |credit_card_expiration_date|
+      assert_equal ["string", "string"], credit_card_expiration_dates.map { |credit_card_expiration_date| credit_card_expiration_date.credit_card_expiration_date }
     end
 
-    credit_card_experation_dates = repo.find_all_by_credit_card_experation_date("other string")
-    credit_card_experation_dates.each do |credit_card_experation_date|
-      assert_equal ["other string"], credit_card_experation_dates.map { |credit_card_experation_date| credit_card_experation_date.credit_card_experation_date }
+    credit_card_expiration_dates = repo.find_all_by_credit_card_expiration_date("other string")
+    credit_card_expiration_dates.each do |credit_card_expiration_date|
+      assert_equal ["other string"], credit_card_expiration_dates.map { |credit_card_expiration_date| credit_card_expiration_date.credit_card_expiration_date }
     end
 
-    credit_card_experation_dates = repo.find_all_by_credit_card_experation_date("jjhjkhj")
-    credit_card_experation_dates.each do |credit_card_experation_date|
-      assert_equal [], credit_card_experation_dates.map { |credit_card_experation_date| credit_card_experation_date.credit_card_experation_date }
+    credit_card_expiration_dates = repo.find_all_by_credit_card_expiration_date("jjhjkhj")
+    credit_card_expiration_dates.each do |credit_card_expiration_date|
+      assert_equal [], credit_card_expiration_dates.map { |credit_card_expiration_date| credit_card_expiration_date.credit_card_expiration_date }
     end
   end
 
@@ -253,6 +253,14 @@ def test_find_transaction_by_id
     updated_ats.each do |updated_at|
       assert_equal [], updated_ats.map { |updated_at| updated_at.updated_at }
     end
+  end
+
+  def test_pass_invoice_id_up_to_sales_engine
+    sales_engine = Minitest::Mock.new
+    repo = TransactionRepository.new([{id: 23, invoice_id: 231}], sales_engine)
+    sales_engine.expect(:find_invoice_by_invoice_id, [], [231])
+    repo.find_invoice_by_invoice_id(231)
+    sales_engine.verify
   end
  
 end
