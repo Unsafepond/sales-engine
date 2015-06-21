@@ -230,4 +230,19 @@ class InvoiceRepositoryTest < Minitest::Test
     end
   end
 
+  def test_pass_merchant_id_for_invoices_up_to_sales_engine
+    sales_engine = Minitest::Mock.new
+    repo = InvoiceRepository.new([{id: 32, merchant_id: 231}], sales_engine)
+    sales_engine.expect(:find_invoice_merchant_with_merchant_id, [], [231])
+    repo.find_invoice_merchant_with_merchant_id(231)
+    sales_engine.verify
+  end
+  def test_pass_customer_id_for_invoices_up_to_sales_engine
+    sales_engine = Minitest::Mock.new
+    repo = InvoiceRepository.new([{id: 32, customer_id: 31}], sales_engine)
+    sales_engine.expect(:find_invoice_customer_with_customer_id, [], [31])
+    repo.find_invoice_customer_with_customer_id(31)
+    sales_engine.verify
+  end
+
 end

@@ -66,7 +66,14 @@ class InvoiceRepository
   end
   def find_all_by_updated_at(updated_at)
     @all.select { |invoice| invoice.updated_at == updated_at }
+  end
 
+  def find_invoice_merchant_with_merchant_id(merchant_id)
+    @sales_engine.find_invoice_merchant_with_merchant_id(merchant_id)
+  end
+
+  def find_invoice_customer_with_customer_id(customer_id)
+    @sales_engine.find_invoice_customer_with_customer_id(customer_id)
   end
 
 
