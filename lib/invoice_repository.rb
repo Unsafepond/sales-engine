@@ -76,5 +76,13 @@ class InvoiceRepository
     @sales_engine.find_invoice_customer_with_customer_id(customer_id)
   end
 
+  def find_invoices_invoice_items(id)
+    @sales_engine.find_invoices_invoice_items(id)
+  end
+
+  def find_invoices_transactions(id)
+    @sales_engine.find_invoices_transactions(id)
+  end
+
 
 end

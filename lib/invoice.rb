@@ -14,10 +14,18 @@ class Invoice
   end
 
   def merchant
-    @invoice_repo.find_invoice_merchant_with_merchant_id(merchant_id)
+    invoice_repo.find_invoice_merchant_with_merchant_id(merchant_id)
   end
 
   def customer
-    @invoice_repo.find_invoice_customer_with_customer_id(customer_id)
+    invoice_repo.find_invoice_customer_with_customer_id(customer_id)
+  end
+
+  def invoice_items
+    invoice_repo.find_invoices_invoice_items(id)
+  end
+
+  def transactions
+    invoice_repo.find_invoices_transactions(id)
   end
 end

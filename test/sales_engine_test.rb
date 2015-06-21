@@ -162,6 +162,22 @@ class SalesEngineTest < Minitest::Test
     assert_equal 1, result.id
   end
 
+  def test_sales_engine_can_get_all_invoice_items_by_invoice_id
+    sales_engine = SalesEngine.new("data_dir")
+    repo = InvoiceItemRepository.new([{id: 1, invoice_id: 23}], sales_engine)
+    sales_engine.invoice_item_repository = repo
+    result = sales_engine.find_invoices_invoice_items(23)
+    assert_equal 1, result[0].id
+  end
+
+  def test_sales_engine_can_get_all_transactions_by_invoice_id
+    sales_engine = SalesEngine.new("data_dir")
+    repo = TransactionRepository.new([{id: 1, invoice_id: 25}], sales_engine)
+    sales_engine.transaction_repository = repo
+    result = sales_engine.find_invoices_transactions(25)
+    assert_equal 1, result[0].id
+  end
+
 
 end
 
