@@ -92,12 +92,10 @@ class SalesEngine
     item_ids = result.map do |invoice_items|
       invoice_items.item_id
     end
-    items = item_ids.map do |item_id|
+    item_ids.map do |item_id|
       item_repository.find_all_by_id(item_id)
-    end
-    flattened_item = items.flatten
+    end.flatten
   end
-
 
 
   private

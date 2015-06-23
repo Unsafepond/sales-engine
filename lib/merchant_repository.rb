@@ -66,6 +66,7 @@ class MerchantRepository
   end
 
 
+
 end
 
 

@@ -124,7 +124,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_sales_engine_can_get_all_invoice_items_by_item_id
     sales_engine = SalesEngine.new("data_dir")
-    repo = InvoiceItemRepository.new([{id: 1, item_id: 23}], sales_engine)
+    repo = InvoiceItemRepository.new([{id: 1, item_id: 23, unit_price: "4321"}], sales_engine)
     sales_engine.invoice_item_repository = repo
     result = sales_engine.find_all_invoice_items_by_item_id(23)
     assert_equal 1, result[0].id
@@ -164,7 +164,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_sales_engine_can_get_all_invoice_items_by_invoice_id
     sales_engine = SalesEngine.new("data_dir")
-    repo = InvoiceItemRepository.new([{id: 1, invoice_id: 23}], sales_engine)
+    repo = InvoiceItemRepository.new([{id: 1, invoice_id: 23, unit_price: "4321"}], sales_engine)
     sales_engine.invoice_item_repository = repo
     result = sales_engine.find_invoices_invoice_items(23)
     assert_equal 1, result[0].id
@@ -181,9 +181,9 @@ class SalesEngineTest < Minitest::Test
   def test_sales_engine_can_get_all_items_by_invoice_id
     sales_engine = SalesEngine.new("data_dir")
     invoice_item_repo = InvoiceItemRepository.new([
-        {id: 3, invoice_id: 25, item_id: 451},
-        {id: 1, invoice_id: 25, item_id: 35},
-        {id: 2, invoice_id: 25, item_id: 450}], sales_engine)
+        {id: 3, invoice_id: 25, item_id: 451, unit_price: "4321"},
+        {id: 1, invoice_id: 25, item_id: 35, unit_price: "4321"},
+        {id: 2, invoice_id: 25, item_id: 450, unit_price: "4321"}], sales_engine)
     item_repo = ItemRepository.new([
         {id: 35, name: "tim", merchant_id: 451, unit_price: "43215"},
         {id: 450, name: "joe", merchant_id: 45, unit_price: "43215"},
@@ -192,6 +192,15 @@ class SalesEngineTest < Minitest::Test
     sales_engine.item_repository =item_repo
     result = sales_engine.find_items_in_invoice(25)
     assert_equal 451, result[0].id
+  end
+
+  def test_sales_engine_can_get_total_revenue
+    data_directory = File.expand_path '../data', __dir__
+    sales_engine = SalesEngine.new(data_directory)
+    sales_engine.startup
+    result = sales_engine.merchant_repository.find_by_id(1)
+
+    assert_equal "528774.64", result.revenue.to_s("F")
   end
 
 

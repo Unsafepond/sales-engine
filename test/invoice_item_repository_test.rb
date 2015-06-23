@@ -11,9 +11,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_all_invoice_items
     repo       = InvoiceItemRepository.new(
-      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, item_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, item_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, item_id: 2, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, item_id: 1, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
     assert_equal 3, repo.all.count
@@ -21,7 +21,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_random_invoices
     repo       = InvoiceItemRepository.new(
-      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
     assert_equal 1, repo.random.id
@@ -30,9 +30,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_invoice_item_by_id
     repo       = InvoiceItemRepository.new(
-      [{id: 1},
-        {id: 1},
-        {id: 3}
+      [{id: 1, unit_price: "4321"},
+        {id: 1, unit_price: "4321"},
+        {id: 3, unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -44,9 +44,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_invoice_by_invoice_id
     repo       = InvoiceItemRepository.new(
-      [{id: 1, invoice_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, invoice_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, invoice_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, invoice_id: 2, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, invoice_id: 2, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, invoice_id: 1, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -56,9 +56,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_invoice_by_quantity
     repo       = InvoiceItemRepository.new(
-      [{id: 1, quantity: 2, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, quantity: 2, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, quantity: 1, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, quantity: 2, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, quantity: 2, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, quantity: 1, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -70,21 +70,21 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_invoice_by_unit_price
     repo       = InvoiceItemRepository.new(
-      [{id: 1, unit_price: 13635, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, unit_price: 13645, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, unit_price: 13635, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, unit_price: "13635", created_at: "2012-03-27 14:53:59 UTC"},
+        {id: 2, unit_price: "13645", created_at: "1996-08-27 14:53:59 UTC"},
+        {id: 3, unit_price: "13635", created_at: "2012-03-27 14:53:59 UTC"}
       ], "fake sales engine"
     )
 
-    unit_prices = repo.find_by_unit_price(13635)
-    assert_equal 13635, unit_prices.unit_price
+    unit_prices = repo.find_by_unit_price(136.35)
+    assert_equal 136.35, unit_prices.unit_price
   end
 
   def test_find_invoice_by_item_id
     repo       = InvoiceItemRepository.new(
-      [{id: 1, item_id: 543, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, item_id: 643, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, item_id: 233, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, item_id: 543, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, item_id: 643, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, item_id: 233, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -94,9 +94,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_invoice_by_created_at
     repo       = InvoiceItemRepository.new(
-      [{id: 1, item_id: 543, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, item_id: 643, created_at: "2012-03-27 14:54:09 UTC"},
-        {id: 3, item_id: 233, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, item_id: 543, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, item_id: 643, created_at: "2012-03-27 14:54:09 UTC", unit_price: "4321"},
+        {id: 3, item_id: 233, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -105,9 +105,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
   def test_find_invoice_by_updated_at
     repo       = InvoiceItemRepository.new(
-      [{id: 1, updated_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, updated_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, updated_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, updated_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, updated_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, updated_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -118,9 +118,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_all_by_id
     repo       = InvoiceItemRepository.new(
-      [{id: 1},
-        {id: 1},
-        {id: 3}
+      [{id: 1, unit_price: "4321"},
+        {id: 1, unit_price: "4321"},
+        {id: 3, unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -142,9 +142,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_all_by_item_id
     repo       = InvoiceItemRepository.new(
-      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, item_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, item_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, item_id: 2, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, item_id: 2, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, item_id: 1, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -165,9 +165,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
   def test_find_all_by_invoice_id
     repo       = InvoiceItemRepository.new(
-      [{id: 1, invoice_id: 2, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, invoice_id: 2, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, invoice_id: 1, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, invoice_id: 2, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, invoice_id: 2, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, invoice_id: 1, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -189,9 +189,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_all_by_quantity
     repo       = InvoiceItemRepository.new(
-      [{id: 1, quantity: 532, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, quantity: 4372, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, quantity: 532, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, quantity: 532, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, quantity: 4372, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, quantity: 532, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -204,9 +204,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_all_by_unit_price
     repo       = InvoiceItemRepository.new(
-      [{id: 1, unit_price: 532, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, unit_price: 4372, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, unit_price: 532, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, unit_price: 532, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, unit_price: 4372, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, unit_price: 532, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -219,9 +219,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_all_by_created_at
     repo       = InvoiceItemRepository.new(
-      [{id: 1, created_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, created_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, created_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, created_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -243,9 +243,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_find_all_by_updated_at
     repo       = InvoiceItemRepository.new(
-      [{id: 1, updated_at: "2012-03-27 14:53:59 UTC"},
-        {id: 2, updated_at: "1996-08-27 14:53:59 UTC"},
-        {id: 3, updated_at: "2012-03-27 14:53:59 UTC"}
+      [{id: 1, updated_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 2, updated_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
+        {id: 3, updated_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"}
       ], "fake sales engine"
     )
 
@@ -267,7 +267,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_pass_invoice_id_up_to_sales_engine
     sales_engine = Minitest::Mock.new
-    repo = InvoiceItemRepository.new([{id: 23, invoice_id: 231}], sales_engine)
+    repo = InvoiceItemRepository.new([{id: 23, invoice_id: 231, unit_price: "4321"}], sales_engine)
     sales_engine.expect(:find_invoice_by_invoice_id, [], [231])
     repo.find_invoice_by_invoice_id(231)
     sales_engine.verify
@@ -275,7 +275,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_pass_item_id_up_to_sales_engine
     sales_engine = Minitest::Mock.new
-    repo = InvoiceItemRepository.new([{id: 23, item_id: 231}], sales_engine)
+    repo = InvoiceItemRepository.new([{id: 23, item_id: 231, unit_price: "4321"}], sales_engine)
     sales_engine.expect(:find_item_by_item_id, [], [231])
     repo.find_item_by_item_id(231)
     sales_engine.verify
