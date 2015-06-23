@@ -21,4 +21,11 @@ class MerchantTest < Minitest::Test
     merchant.invoices
     repo.verify
   end
+  # def test_it_can_pass_instances_up_to_invoice_items_repo_for_revenue
+  #   repo = Minitest::Mock.new
+  #   merchant = Merchant.new({ id: "41" }, repo)
+  #   repo.expect(:find_total_merchant_revenue, [], [merchant.id])
+  #   merchant.revenue
+  #   repo.verify
+  # end
 end
