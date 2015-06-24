@@ -14,4 +14,8 @@ class Customer
     @customer_repo.find_all_invoices_by_customer_id(id)
   end
 
+  def transactions
+    invoices.map {|invoice| invoice.transactions}
+  end
+
 end

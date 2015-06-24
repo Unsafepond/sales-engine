@@ -31,12 +31,12 @@ class SalesEngine
     items = parse('items.csv')
     transactions = parse('transactions.csv')
 
-    @merchant_repository      = MerchantRepository.new(merchants, self)
-    @invoice_repository       = InvoiceRepository.new(invoices, self)
-    @item_repository         = ItemRepository.new(items, self)
-    @invoice_item_repository  = InvoiceItemRepository.new(invoice_items, self)
-    @customer_repository      = CustomerRepository.new(customers, self)
-    @transaction_repository   = TransactionRepository.new(transactions, self)
+    @merchant_repository      ||= MerchantRepository.new(merchants, self)
+    @invoice_repository       ||= InvoiceRepository.new(invoices, self)
+    @item_repository          ||= ItemRepository.new(items, self)
+    @invoice_item_repository  ||= InvoiceItemRepository.new(invoice_items, self)
+    @customer_repository      ||= CustomerRepository.new(customers, self)
+    @transaction_repository   ||= TransactionRepository.new(transactions, self)
   end
 
   def find_all_items_by_merchant_id(id)

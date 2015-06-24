@@ -41,5 +41,8 @@ class Merchant
   def successful_invoices
     invoices.select { |invoice| invoice.successful?}
   end
+  def successful_total_items
+    successful_invoice_items.flatten.map {|invoice_item| invoice_item.quantity}.reduce(:+)
+  end
 end
 

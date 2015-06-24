@@ -76,6 +76,11 @@ class MerchantRepository
   def revenues
     all.map {|merchant| merchant.revenue}
   end
+  def most_items(quantity)
+    all.group_by {|merchant| merchant.successful_total_items}
+      .sort_by { |k,v| k}.to_h.values.last(quantity)
+        .flatten.reverse
+  end
 
 
 end
