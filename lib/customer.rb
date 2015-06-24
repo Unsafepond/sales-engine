@@ -18,4 +18,22 @@ class Customer
     invoices.map {|invoice| invoice.transactions}
   end
 
+  def favorite_merchant
+    #need to get all successful transactions
+    #count the number per merchant
+    #return the merchant that has the most invoices
+    # merchants.map {|merchant|merchant}.first
+    count_of_merchants.sort_by { |k,v| v}.to_h.keys.first
+  end
+  def successful_invoices
+    invoices.select {|invoice| invoice.successful?}
+  end
+  def merchants
+    successful_invoices.map{|invoice| invoice.merchant}
+  end
+  def count_of_merchants
+    merchants.inject(Hash.new(0)) { |h, e| h[e] += 1 ; h }
+  end
+
+
 end
