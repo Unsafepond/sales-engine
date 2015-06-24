@@ -1,6 +1,7 @@
 require_relative 'sales_engine'
 require_relative 'invoice'
 require 'bigdecimal'
+require 'date'
 
 class InvoiceRepository
   attr_reader :all
@@ -40,11 +41,11 @@ class InvoiceRepository
   end
 
   def find_by_created_at(created_at)
-    all.find { |invoice| invoice.created_at == created_at}
+    all.find { |invoice| invoice.created_at == Date.parse(created_at) }
   end
 
   def find_by_updated_at(updated_at)
-    all.find { |invoice| invoice.updated_at == updated_at}
+    all.find { |invoice| invoice.updated_at == Date.parse(updated_at) }
   end
 
   def find_all_by_id(id)
