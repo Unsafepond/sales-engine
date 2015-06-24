@@ -44,5 +44,18 @@ class Merchant
   def successful_total_items
     successful_invoice_items.flatten.map {|invoice_item| invoice_item.quantity}.reduce(:+)
   end
+  def favorite_customer
+    #sort successful transactions by customer
+    #count the number per customer
+    #return the Customer object
+    max = count_per_customer.values.max
+    count_per_customer.select{ |k,v| v == max}.keys.first
+  end
+  def customers
+    successful_invoices.map {|invoice| invoice.customer}
+  end
+  def count_per_customer
+    customers.inject(Hash.new(0)) { |h, e| h[e] += 1; h}
+  end
 end
 
