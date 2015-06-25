@@ -50,36 +50,6 @@ class MerchantTest < Minitest::Test
     repo.expect(:find_all_invoices_by_merchant_id, [invoice_1, invoice_2], [merchant.id])
 
     assert_equal 30, merchant.revenue(Date.parse("2012-03-27"))
-
   end
 
-  def test_for_favorite_customer
-    skip
-    customer_2 = Minitest::Mock.new
-    customer_2.expect(:successful?, true, [])
-    customer_2.expect(:created_at, Date.parse("2012-03-27 14:53:59 UTC"), [])
-    customer_2.expect(:revenue, 30, [])
-
-    customer_1 = Minitest::Mock.new
-    customer_1.expect(:successful?, true, [])
-    customer_1.expect(:created_at, Date.parse("2012-03-28 14:53:59 UTC"), [])
-    customer_1.expect(:revenue, 50, [])
-
-    repo = Minitest::Mock.new
-    merchant = Merchant.new( {id: "41"}, repo)
-    repo.expect(:find_all_invoices_by_merchant_id, [customer_1, customer_2], [merchant.id])
-
-    assert_equal customer_1, merchant.favorite_customer
-  end
-
-  def test_favorite_customer
-    sales_engine = Minitest::Mock.new
-
-    merchant = Merchant.new({id: 1, name: "Jerrod"}, sales_engine)
-    customer =  OpenStruct.new(favorite_customer: "Jerrod")
-
-    merchant.stub(:id, customer) {
-      assert_equal 1, merchant.favorite_customer
-    }
-  end
 end
