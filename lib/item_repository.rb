@@ -86,7 +86,8 @@ class ItemRepository
   end
 
   def most_items(quantity)
-    all.group_by {|item| item.merchant.successful_total_items}.sort_by { |k,v| k}.to_h.values.last(quantity)
-      .flatten
+    all.max_by(quantity) {|item| item.quantity_sold}
+    # all.group_by {|item| item.merchant.successful_total_items}.sort_by { |k,v| k}.to_h.values.last(quantity)
+    #   .flatten
   end
 end

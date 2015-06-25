@@ -58,22 +58,7 @@ class Merchant
     customers.inject(Hash.new(0)) { |h, e| h[e] += 1; h}
   end
   def customers_with_pending_invoices
-    # a = all_transactions.map{|i|i.id}
-    # b = successful_invoices.map{|i|i.id}
-    # c = unsuccessful_invoices.map{|i|i.id}
-    # a - b - c
-    (all_transactions - successful_invoices).map {|invoice| invoice.customer}
-
-    # pending_invoices.map {|invoice| invoice.customer_id == invoice.customer}
+    (invoices - successful_invoices).map {|invoice| invoice.customer}
   end
-  def all_transactions
-    invoices
-  end
-  def pending_invoices
-    (all_transactions - successful_invoices)
-
-    #need to filter unsuccessful by successful and
-  end
-
 end
 

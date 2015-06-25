@@ -44,6 +44,14 @@ class Item
       total + (invoice_item.quantity * invoice_item.unit_price)
     end
   end
+  def quantity_sold
+    item = successful_invoice_items.select do |invoice_item|
+      invoice_item.item_id == id
+    end
+    item.reduce(0) do |sum, i_item|
+      sum + i_item.quantity
+    end
+  end
 
 
 end
