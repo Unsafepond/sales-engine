@@ -1,6 +1,10 @@
 require 'pry'
 class Merchant
-  attr_reader :merchant_repo, :id, :name, :created_at, :updated_at
+  attr_reader :merchant_repo,
+              :id,
+              :name,
+              :created_at,
+              :updated_at
 
   def initialize(row, merchant_repo)
     @merchant_repo = merchant_repo
@@ -18,21 +22,49 @@ class Merchant
     @merchant_repo.find_all_invoices_by_merchant_id(id)
   end
 
-  def revenue
-    invoice_items = successful_invoices.map {|invoice| invoice.invoice_items}
-    invoice_items.flatten.reduce(0) do |total, invoice_item|
-      (invoice_item.quantity * invoice_item.unit_price) + total
+  def revenue(date = nil)
+    if date
+      revenue_by_date(date)
+    else
+      total_revenue_for_all_dates
     end
   end
-  def merchant_transactions
-    invoices.map {|invoice| invoice.transactions}
+  def total_revenue_for_all_dates
+    successful_invoices.reduce(0) { |rev, i| rev + i.revenue}
   end
-  def successful_transactions
-    merchant_transactions.flatten.find_all {|transaction| transaction.success? }
+  def revenue_by_date(date)
+    successful_invoices.select do |invoice|
+      invoice.created_at == date
+    end.reduce(0) do |revenue, invoice|
+      revenue + invoice.revenue
+    end
+  end
+  def successful_invoice_items
+    successful_invoices.map {|invoice| invoice.invoice_items}
   end
   def successful_invoices
-    successful_transactions.flatten.map {|transaction| transaction.invoice}
-    # binding.pry
+    invoices.select { |invoice| invoice.successful?}
+  end
+  def unsuccessful_invoices
+    invoices.select { |invoice|invoice.pending}
+  end
+  def successful_total_items
+    successful_invoice_items.flatten.map do |invoice_item|
+      invoice_item.quantity
+    end.reduce(:+)
+  end
+  def favorite_customer
+    max = count_per_customer.values.max
+    count_per_customer.select{ |k,v| v == max}.keys.first
+  end
+  def customers
+    successful_invoices.map {|invoice| invoice.customer}
+  end
+  def count_per_customer
+    customers.inject(Hash.new(0)) { |h, e| h[e] += 1; h}
+  end
+  def customers_with_pending_invoices
+    (invoices - successful_invoices).map {|invoice| invoice.customer}
   end
 end
 

@@ -6,7 +6,7 @@ class Transaction
               :invoice_id,
               :credit_card_number,
               :credit_card_expiration_date,
-              :result, 
+              :result,
               :created_at,
               :updated_at
 
@@ -28,6 +28,8 @@ class Transaction
   def success?
     result == "success"
   end
+
+  def failed
+    result != "success"
+  end
 end
-# id,invoice_id,credit_card_number,credit_card_expiration_date,
-#result,created_at,updated_at

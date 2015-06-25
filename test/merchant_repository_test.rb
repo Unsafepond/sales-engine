@@ -190,6 +190,37 @@ class MerchantRepositoryTest < Minitest::Test
     sales_engine.verify
   end
 
+  def test_it_can_get_revenue_by_date_for_multiple_merchants
+    invoice_3 = Minitest::Mock.new
+    invoice_3.expect(:merchant_id, 41)
+    invoice_3.expect(:successful?, true, [])
+    invoice_3.expect(:created_at, Date.parse("2012-03-27 14:53:59 UTC"), [])
+    invoice_3.expect(:revenue, 30, [])
 
+    invoice_2 = Minitest::Mock.new
+    invoice_2.expect(:merchant_id, 51)
+    invoice_2.expect(:successful?, true, [])
+    invoice_2.expect(:created_at, Date.parse("2012-03-27 14:53:59 UTC"), [])
+    invoice_2.expect(:revenue, 30, [])
+
+    invoice_1 = Minitest::Mock.new
+    invoice_1.expect(:merchant_id, 61)
+    invoice_1.expect(:successful?, true, [])
+    invoice_1.expect(:created_at, Date.parse("2012-03-28 14:53:59 UTC"), [])
+    invoice_1.expect(:revenue, 50, [])
+
+    repo = Minitest::Mock.new
+
+    merchant_repository = MerchantRepository.new(
+      [ { id: "41" },{ id: "51" },{ id: "61" } ], repo
+    )
+
+    repo.expect(:find_all_invoices_by_merchant_id, [invoice_3], [41])
+    repo.expect(:find_all_invoices_by_merchant_id, [invoice_2], [51])
+    repo.expect(:find_all_invoices_by_merchant_id, [invoice_1], [61])
+
+    assert_equal 60, merchant_repository.revenue(Date.parse("2012-03-27"))
+
+  end
 
 end

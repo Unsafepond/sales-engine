@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/invoice_item_repository'
 require './lib/sales_engine'
+require 'date'
 require 'pry'
 
 class InvoiceItemRepositoryTest < Minitest::Test
@@ -92,7 +93,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal 543, item_ids.item_id
   end
 
-  def test_find_invoice_by_created_at
+  def test_find_invoice_item_by_created_at
     repo       = InvoiceItemRepository.new(
       [{id: 1, item_id: 543, created_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
         {id: 2, item_id: 643, created_at: "2012-03-27 14:54:09 UTC", unit_price: "4321"},
@@ -100,10 +101,10 @@ class InvoiceItemRepositoryTest < Minitest::Test
       ], "fake sales engine"
     )
 
-    created_at = repo.find_by_created_at("2012-03-27 14:54:09 UTC")
-    assert_equal "2012-03-27 14:54:09 UTC", created_at.created_at
+    created_at = repo.find_by_created_at("2012-03-27 14:53:59 UTC")
+    assert_equal Date.parse("2012-03-27 14:53:59 UTC"), created_at.created_at
   end
-  def test_find_invoice_by_updated_at
+  def test_find_invoice_item_by_updated_at
     repo       = InvoiceItemRepository.new(
       [{id: 1, updated_at: "2012-03-27 14:53:59 UTC", unit_price: "4321"},
         {id: 2, updated_at: "1996-08-27 14:53:59 UTC", unit_price: "4321"},
@@ -112,7 +113,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     )
 
     updated_at = repo.find_by_updated_at("1996-08-27 14:53:59 UTC")
-    assert_equal "1996-08-27 14:53:59 UTC", updated_at.updated_at
+    assert_equal Date.parse("1996-08-27 14:53:59 UTC"), updated_at.updated_at
 
   end
 

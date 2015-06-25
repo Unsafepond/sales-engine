@@ -193,17 +193,7 @@ class SalesEngineTest < Minitest::Test
     result = sales_engine.find_items_in_invoice(25)
     assert_equal 451, result[0].id
   end
-
-  def test_sales_engine_can_get_total_revenue
-    data_directory = File.expand_path '../data', __dir__
-    sales_engine = SalesEngine.new(data_directory)
-    sales_engine.startup
-    result = sales_engine.merchant_repository.find_by_id(1)
-
-    assert_equal "528774.64", result.revenue.to_s("F")
-  end
-
-
+  
 end
 
 

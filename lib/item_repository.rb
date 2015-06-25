@@ -3,17 +3,17 @@ require_relative 'item'
 require 'bigdecimal'
 
 class ItemRepository
-	attr_reader :all
-	def initialize(hashes, sales_engine)
-    	@items = hashes.map { |hash| Item.new(hash.to_hash, self)}
-			@sales_engine = sales_engine
+  attr_reader :all
+  def initialize(hashes, sales_engine)
+    @items ||= hashes.map { |hash| Item.new(hash.to_hash, self)}
+    @sales_engine = sales_engine
   end
   def inspect
     "#<#{self.class} #{@items.size} rows>"
   end
- 	def random
-    	all.shuffle.first
- 	end
+  def random
+    all.shuffle.first
+  end
   def all
     @items
   end
@@ -81,5 +81,11 @@ class ItemRepository
     @sales_engine.find_merchant_by_merchant_id(merchant_id)
   end
 
+  def most_revenue(quantity)
+    all.max_by(quantity) {|item| item.total_revenue}
+  end
 
+  def most_items(quantity)
+    all.max_by(quantity) {|item| item.quantity_sold}
+  end
 end

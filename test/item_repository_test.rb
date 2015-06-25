@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/item_repository'
 require './lib/sales_engine'
+require 'ostruct'
 require 'pry'
 # id,name,description,unit_price,merchant_id,
 # created_at,updated_at
@@ -268,10 +269,22 @@ def test_find_item_by_name
   def test_pass_merchant_id_up_to_sales_engine
     sales_engine = Minitest::Mock.new
     repo = ItemRepository.new([{id: 23, merchant_id: 231, unit_price: "43215"}], sales_engine)
+    repo = ItemRepository.new([{id: 23, merchant_id: 231, unit_price: "43215"}], sales_engine)
     sales_engine.expect(:find_merchant_by_merchant_id, [], [231])
     repo.find_merchant_by_merchant_id(231)
     sales_engine.verify
   end
 
+  def test_most_revenue
+    sales_engine = Minitest::Mock.new
+
+    item_repo = ItemRepository.new([], sales_engine)
+    items = [OpenStruct.new(total_revenue: 8000), OpenStruct.new(total_revenue: 6000)]
+
+    item_repo.stub(:all, items) {
+      top_items = item_repo.most_revenue(2)
+      assert_equal [8000, 6000], top_items.map {|item| item.total_revenue}
+    }
+  end
 
 end

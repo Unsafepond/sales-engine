@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require './lib/invoice_repository'
 require './lib/sales_engine'
+require 'date'
 require 'pry'
 
 class InvoiceRepositoryTest < Minitest::Test
@@ -83,7 +84,7 @@ class InvoiceRepositoryTest < Minitest::Test
     repo = se.invoice_repository
 
     created_at = repo.find_by_created_at("2012-03-12 05:54:09 UTC")
-      assert_equal "2012-03-12 05:54:09 UTC", created_at.created_at
+      assert_equal Date.parse("2012-03-12 05:54:09 UTC"), created_at.created_at
   end
   def test_find_invoice_by_updated_at
     data_directory = File.expand_path 'fixtures', __dir__
@@ -92,7 +93,7 @@ class InvoiceRepositoryTest < Minitest::Test
     repo = se.invoice_repository
 
     updated_at = repo.find_by_updated_at("2012-03-10 00:54:09 UTC")
-    assert_equal "2012-03-10 00:54:09 UTC", updated_at.updated_at
+    assert_equal Date.parse("2012-03-10 00:54:09 UTC"), updated_at.updated_at
 
   end
 
