@@ -47,4 +47,12 @@ class Invoice
       (invoice_item.quantity * invoice_item.unit_price) + total
     end
   end
+
+  def add_items(items, invoice_id)
+    invoice_repo.sales_engine.add_item(items, invoice_id)
+  end
+
+  def charge(data)
+    @invoice_repo.charge(data, id)
+  end
 end

@@ -97,6 +97,14 @@ class SalesEngine
     end.flatten
   end
 
+  def add_item(items, invoice_id)
+    invoice_item_repository.add_item(items, invoice_id)
+  end
+
+  def charge(data, id)
+    transaction_repository.charge(data, id)
+  end
+
 
   private
 

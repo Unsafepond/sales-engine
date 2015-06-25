@@ -82,5 +82,32 @@ class InvoiceItemRepository
     @sales_engine.find_item_by_item_id(item_id)
   end
 
+  def add_item(items, invoice_id)
+    items.each do |i|
+      data = {
+        :id         => next_id,
+        :item_id    => i.id,
+        :invoice_id => invoice_id,
+        :quantity   => count_items(items)[i],
+        :unit_price => i.unit_price,
+        :created_at => Time.now,
+        :updated_at => Time.now
+      }
+
+      @invoice_items << InvoiceItem.new(data, self)
+
+    end
+  end
+
+  def next_id
+    @invoice_items.last.id + 1
+  end
+
+  def count_items(items)
+    items.reduce(Hash.new(0)) do |hash, item|
+      hash[item] += 1
+    end
+  end
+
 
 end

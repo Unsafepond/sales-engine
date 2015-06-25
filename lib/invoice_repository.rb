@@ -5,6 +5,7 @@ require 'date'
 
 class InvoiceRepository
   attr_reader :all
+  attr_accessor :sales_engine
 
   def initialize(hashes, sales_engine)
     @invoices = hashes.map { |hash| Invoice.new(hash.to_hash, self)}
@@ -89,5 +90,30 @@ class InvoiceRepository
 
   def find_items_in_invoice(id)
     @sales_engine.find_items_in_invoice(id)
+  end
+
+  def create(inputs)
+    data = {
+      id:           next_id,
+      customer_id:  inputs[:customer].id,
+      merchant_id:  inputs[:merchant].id,
+      status:       inputs[:status],
+      created_at:   Time.now.to_s,
+      updated_at:   Time.now.to_s
+    }
+    invoice = Invoice.new(data, self)
+
+    @invoices << invoice
+
+    invoice.add_items(inputs[:items], invoice.id)
+    invoice
+  end
+
+  def next_id
+    @invoices.last.id + 1
+  end
+
+  def charge(data, id)
+    @sales_engine.charge(data, id)
   end
 end
