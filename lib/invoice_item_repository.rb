@@ -103,12 +103,4 @@ class InvoiceItemRepository
   def next_id
     @invoice_items.last.id + 1
   end
-
-  def count_items(items)
-    items.reduce(Hash.new(0)) do |hash, item|
-      hash[item] += 1
-    end
-  end
-
-
 end

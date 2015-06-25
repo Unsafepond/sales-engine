@@ -109,7 +109,8 @@ class SalesEngine
   private
 
   def parse(filename)
-    CSV.read "#{@data_dir}/#{filename}", headers: true, header_converters: :symbol
+    CSV.read "#{@data_dir}/#{filename}",
+      headers: true, header_converters: :symbol
   end
 
 end

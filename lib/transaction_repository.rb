@@ -31,10 +31,14 @@ class TransactionRepository
     all.select { |transaction| transaction.invoice_id == invoice_id }
   end
   def find_by_credit_card_number(credit_card_number)
-    all.find { |transaction| transaction.credit_card_number == credit_card_number }
+    all.find do |transaction|
+      transaction.credit_card_number == credit_card_number
+    end
   end
   def find_all_by_credit_card_number(credit_card_number)
-    all.select { |transaction| transaction.credit_card_number == credit_card_number }
+    all.select do |transaction|
+      transaction.credit_card_number == credit_card_number
+    end
   end
 
   def find_by_credit_card_expiration_date(credit_card_expiration_date)

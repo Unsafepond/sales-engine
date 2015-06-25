@@ -2,7 +2,13 @@ require_relative 'invoice_repository'
 require 'date'
 
 class Invoice
-  attr_reader :invoice_repo, :id, :customer_id, :merchant_id, :status, :created_at, :updated_at
+  attr_reader :invoice_repo,
+              :id,
+              :customer_id,
+              :merchant_id,
+              :status,
+              :created_at,
+              :updated_at
 
   def initialize(row, invoice_repo)
     @invoice_repo = invoice_repo

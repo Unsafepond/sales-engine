@@ -3,7 +3,14 @@ require 'bigdecimal'
 require 'date'
 
 class InvoiceItem
-  attr_reader :invoice_item_repo, :id, :item_id, :invoice_id, :quantity, :unit_price, :created_at, :updated_at
+  attr_reader :invoice_item_repo,
+              :id,
+              :item_id,
+              :invoice_id,
+              :quantity,
+              :unit_price,
+              :created_at,
+              :updated_at
 
   def initialize(row, invoice_item_repo)
     @invoice_item_repo = invoice_item_repo

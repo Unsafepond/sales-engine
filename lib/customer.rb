@@ -1,5 +1,10 @@
 class Customer
-  attr_reader :customer_repo, :id, :first_name, :last_name, :created_at, :updated_at
+  attr_reader :customer_repo,
+              :id,
+              :first_name,
+              :last_name,
+              :created_at,
+              :updated_at
 
   def initialize(row, customer_repo)
     @customer_repo = customer_repo

@@ -1,6 +1,10 @@
 require 'pry'
 class Merchant
-  attr_reader :merchant_repo, :id, :name, :created_at, :updated_at
+  attr_reader :merchant_repo,
+              :id,
+              :name,
+              :created_at,
+              :updated_at
 
   def initialize(row, merchant_repo)
     @merchant_repo = merchant_repo
@@ -45,7 +49,9 @@ class Merchant
     invoices.select { |invoice|invoice.pending}
   end
   def successful_total_items
-    successful_invoice_items.flatten.map {|invoice_item| invoice_item.quantity}.reduce(:+)
+    successful_invoice_items.flatten.map do |invoice_item|
+      invoice_item.quantity
+    end.reduce(:+)
   end
   def favorite_customer
     max = count_per_customer.values.max
