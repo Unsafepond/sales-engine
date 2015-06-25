@@ -195,6 +195,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_sales_engine_can_get_total_revenue
+    skip
     data_directory = File.expand_path '../data', __dir__
     sales_engine = SalesEngine.new(data_directory)
     sales_engine.startup

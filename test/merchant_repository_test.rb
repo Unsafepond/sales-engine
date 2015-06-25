@@ -224,6 +224,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_for_most_revenue_by_any_number_of_merchants
+    skip
     # merchant_1 = Merchant.new() # build out their related invoices; where 3 has highest collective value, followed by 1, then 2
     # merchant_2 = Merchant.new()
     # merchant_3 = Merchant.new()

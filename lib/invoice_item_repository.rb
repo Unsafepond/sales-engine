@@ -6,7 +6,7 @@ class InvoiceItemRepository
   attr_reader :all
 
   def initialize(hashes, sales_engine)
-    @invoice_items = hashes.map { |hash| InvoiceItem.new(hash.to_hash, self)}
+    @invoice_items ||= hashes.map { |hash| InvoiceItem.new(hash.to_hash, self)}
     @sales_engine = sales_engine
   end
   def inspect
@@ -52,7 +52,6 @@ class InvoiceItemRepository
 
   def find_all_by_item_id(item_id)
     all.select { |invoice_item| invoice_item.item_id == item_id }
-
   end
 
   def find_all_by_invoice_id(invoice_id)

@@ -8,7 +8,7 @@ class CustomerRepository
               :all
 
   def initialize(hashes, sales_engine)
-    @customers = hashes.map { |hash| Customer.new(hash.to_hash, self)}
+    @customers ||= hashes.map { |hash| Customer.new(hash.to_hash, self)}
     @sales_engine = sales_engine
   end
   def inspect

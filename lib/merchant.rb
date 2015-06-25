@@ -41,13 +41,13 @@ class Merchant
   def successful_invoices
     invoices.select { |invoice| invoice.successful?}
   end
+  def unsuccessful_invoices
+    invoices.select { |invoice|invoice.pending}
+  end
   def successful_total_items
     successful_invoice_items.flatten.map {|invoice_item| invoice_item.quantity}.reduce(:+)
   end
   def favorite_customer
-    #sort successful transactions by customer
-    #count the number per customer
-    #return the Customer object
     max = count_per_customer.values.max
     count_per_customer.select{ |k,v| v == max}.keys.first
   end
@@ -57,5 +57,23 @@ class Merchant
   def count_per_customer
     customers.inject(Hash.new(0)) { |h, e| h[e] += 1; h}
   end
+  def customers_with_pending_invoices
+    # a = all_transactions.map{|i|i.id}
+    # b = successful_invoices.map{|i|i.id}
+    # c = unsuccessful_invoices.map{|i|i.id}
+    # a - b - c
+    (all_transactions - successful_invoices).map {|invoice| invoice.customer}
+
+    # pending_invoices.map {|invoice| invoice.customer_id == invoice.customer}
+  end
+  def all_transactions
+    invoices
+  end
+  def pending_invoices
+    (all_transactions - successful_invoices)
+
+    #need to filter unsuccessful by successful and
+  end
+
 end
 

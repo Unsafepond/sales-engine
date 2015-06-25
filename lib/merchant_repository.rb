@@ -12,7 +12,7 @@ class MerchantRepository
   attr_reader :merchants,
               :all
   def initialize(hashes, sales_engine)
-    @merchants = hashes.map { |hash| Merchant.new(hash.to_hash, self)}
+    @merchants ||= hashes.map { |hash| Merchant.new(hash.to_hash, self)}
     @sales_engine = sales_engine
   end
   def inspect
@@ -71,15 +71,20 @@ class MerchantRepository
   end
 
   def most_revenue(quantity)
-    all.group_by {|merchant| merchant.revenue}.sort_by { |k,v| k}.to_h.values.last(quantity).flatten.reverse
+    grouped_merchant_revenue.sort_by { |k,v| k}.to_h.values.last(quantity).flatten.reverse
   end
   def revenues
     all.map {|merchant| merchant.revenue}
   end
   def most_items(quantity)
-    all.group_by {|merchant| merchant.successful_total_items}
-      .sort_by { |k,v| k}.to_h.values.last(quantity)
+    grouped_merchant_items.sort_by { |k,v| k}.to_h.values.last(quantity)
         .flatten.reverse
+  end
+  def grouped_merchant_revenue
+    @grouped_merchant_revenue ||= all.group_by {|merchant| merchant.revenue}
+  end
+  def grouped_merchant_items
+    @grouped_merchant_items ||= all.group_by {|merchant| merchant.successful_total_items}
   end
 
 

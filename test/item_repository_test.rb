@@ -276,7 +276,35 @@ def test_find_item_by_name
 
   def test_most_revenue
     #all items find successful merchant invoices and total revenue
+    sales_engine = SalesEngine.new("data_dir")
 
+    invoice_item_repo = InvoiceItemRepository.new([
+          {id: 4, invoice_id: 24, item_id: 451, unit_price: "4000", quantity: 1},
+          {id: 3, invoice_id: 25, item_id: 451, unit_price: "4000", quantity: 1},
+          {id: 1, invoice_id: 26, item_id: 35, unit_price: "5000", quantity: 1},
+          {id: 2, invoice_id: 27, item_id: 450, unit_price: "6000", quantity: 1}], sales_engine)
+
+    item_repo = ItemRepository.new([
+        {id: 35, unit_price: "4000"},
+        {id: 450, unit_price: "4000"},
+        {id: 451, unit_price: "4000"}], sales_engine)
+
+    invoice_repo = InvoiceRepository.new([
+        {id: 24},
+        {id: 25},
+        {id: 26},
+        {id: 27}], sales_engine)
+
+    transaction_repo = TransactionRepository.new([
+        {id: 37, result: "success", invoice_id: 24},
+        {id: 36, result: "failed", invoice_id: 25},
+        {id: 35, result: "success", invoice_id: 25},
+        {id: 450, result: "failed", invoice_id: 26},
+        {id: 451, result: "success", invoice_id: 27}], sales_engine)
+
+    top_items = item_repo.most_revenue(2)
+
+    assert_equal [451, 450], top_items.map {|item| item.id}
   end
 
 

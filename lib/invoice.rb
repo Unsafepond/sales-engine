@@ -38,8 +38,16 @@ class Invoice
     transactions.any? { |t| t.success? }
   end
 
+  def pending
+    transactions.any? { |t| t.failed }
+  end
+
+  def filtered_pending
+
+  end
+
   def revenue
-    invoice_items.flatten.reduce(0) do |total, invoice_item|
+   @revenue ||= invoice_items.flatten.reduce(0) do |total, invoice_item|
       (invoice_item.quantity * invoice_item.unit_price) + total
     end
   end

@@ -30,6 +30,21 @@ class Item
     item_repo.find_merchant_by_merchant_id(merchant_id)
   end
 
+  def best_day
+    #return the date with the most sales for the given item using the invoice date
+    #go find the item_invoice with the most successful sales by revenue for item_id
+    i= successful_invoice_items.select {|invoice_item| invoice_item.invoice.revenue}
+    binding.pry
+  end
+  def successful_invoice_items
+    invoice_items.select { |invoice_item| invoice_item.successful?}
+  end
+  def total_revenue
+    successful_invoice_items.reduce(0) do |total, invoice_item|
+      total + (invoice_item.quantity * invoice_item.unit_price)
+    end
+  end
+
 
 end
 # id,name,description,unit_price,merchant_id,
