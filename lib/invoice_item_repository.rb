@@ -1,6 +1,7 @@
 require_relative 'sales_engine'
 require_relative 'invoice_item'
 require 'bigdecimal'
+require 'date'
 
 class InvoiceItemRepository
   attr_reader :all
@@ -88,10 +89,10 @@ class InvoiceItemRepository
         :id         => next_id,
         :item_id    => i.id,
         :invoice_id => invoice_id,
-        :quantity   => count_items(items)[i],
+        :quantity   => items.count,
         :unit_price => i.unit_price,
-        :created_at => Time.now,
-        :updated_at => Time.now
+        :created_at => Time.now.to_s,
+        :updated_at => Time.now.to_s
       }
 
       @invoice_items << InvoiceItem.new(data, self)
