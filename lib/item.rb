@@ -33,8 +33,10 @@ class Item
   def best_day
     #return the date with the most sales for the given item using the invoice date
     #go find the item_invoice with the most successful sales by revenue for item_id
-    i= successful_invoice_items.select {|invoice_item| invoice_item.invoice.revenue}
-    binding.pry
+    # i= successful_invoice_items.select {|invoice_item| invoice_item.invoice.revenue}
+    max = invoice_items.max_by { |invoice_item| invoice_item.quantity }
+    max.invoice.created_at
+    # i = successful_invoice_items.max_by {|invoice_item| invoice_item.invoice.revenue}.created_at
   end
   def successful_invoice_items
     invoice_items.select { |invoice_item| invoice_item.successful?}
