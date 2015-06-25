@@ -69,6 +69,17 @@ class MerchantTest < Minitest::Test
     merchant = Merchant.new( {id: "41"}, repo)
     repo.expect(:find_all_invoices_by_merchant_id, [customer_1, customer_2], [merchant.id])
 
-    assert_equal "mike", merchant.favorite_customer
+    assert_equal customer_1, merchant.favorite_customer
+  end
+
+  def test_favorite_customer
+    sales_engine = Minitest::Mock.new
+
+    merchant = Merchant.new({id: 1, name: "Jerrod"}, sales_engine)
+    customer =  OpenStruct.new(favorite_customer: "Jerrod")
+
+    merchant.stub(:id, customer) {
+      assert_equal 1, merchant.favorite_customer
+    }
   end
 end

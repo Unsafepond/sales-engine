@@ -40,11 +40,11 @@ class InvoiceItemRepository
   end
 
   def find_by_created_at(created_at)
-    all.find { |invoice_item| invoice_item.created_at == created_at}
+    all.find { |invoice_item| invoice_item.created_at == Date.parse(created_at)}
   end
 
   def find_by_updated_at(updated_at)
-    all.find { |invoice_item| invoice_item.updated_at == updated_at}
+    all.find { |invoice_item| invoice_item.updated_at == Date.parse(updated_at)}
   end
 
   def find_all_by_id(id)

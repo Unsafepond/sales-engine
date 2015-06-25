@@ -276,14 +276,7 @@ def test_find_item_by_name
   end
 
   def test_most_revenue
-    #all items find successful merchant invoices and total revenue
     sales_engine = Minitest::Mock.new
-
-    # invoice_item_repo = InvoiceItemRepository.new([
-    #       {id: 4, invoice_id: 24, item_id: 451, unit_price: "4000", quantity: 1},
-    #       {id: 3, invoice_id: 25, item_id: 451, unit_price: "4000", quantity: 1},
-    #       {id: 1, invoice_id: 26, item_id: 35, unit_price: "5000", quantity: 1},
-    #       {id: 2, invoice_id: 27, item_id: 450, unit_price: "6000", quantity: 1}], sales_engine)
 
     item_repo = ItemRepository.new([], sales_engine)
     items = [OpenStruct.new(total_revenue: 8000), OpenStruct.new(total_revenue: 6000)]
@@ -292,23 +285,6 @@ def test_find_item_by_name
       top_items = item_repo.most_revenue(2)
       assert_equal [8000, 6000], top_items.map {|item| item.total_revenue}
     }
-
-    # invoice_repo = InvoiceRepository.new([
-    #     {id: 24},
-    #     {id: 25},
-    #     {id: 26},
-    #     {id: 27}], sales_engine)
-
-    # transaction_repo = TransactionRepository.new([
-    #     {id: 37, result: "success", invoice_id: 24},
-    #     {id: 36, result: "failed", invoice_id: 25},
-    #     {id: 35, result: "success", invoice_id: 25},
-    #     {id: 450, result: "failed", invoice_id: 26},
-    #     {id: 451, result: "success", invoice_id: 27}], sales_engine)
-
-
-
   end
-
 
 end
